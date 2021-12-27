@@ -1,21 +1,15 @@
-<script lang="ts">
-  import OmhhLogo from '$lib/icons/omhh.svelte';
-  import Menu from '$lib/components/side-menu.svelte';
-
-  let y;  
+<script lang="ts">  
+  import AppHeader from '$lib/components/app-header.svelte'; 
+  import SideNav from '$lib/components/side-nav.svelte';
 </script>
 
-<svelte:window bind:scrollY={y}/>
+<AppHeader/>
 
-<header style="--scroll-shadow: {y > 0 ? 'var(--shadow-elevation-medium)' : 'none'}">
-  <Menu/>
-  <a class="title-link" href="/">
-    <OmhhLogo />
-  </a>
-</header>
 <div class="page-wrapper">
   <slot></slot>
 </div>
+
+<SideNav/>
 
 <style>
   /*
@@ -207,31 +201,10 @@
     font-size: var(--font-size-xl);
     line-height: var(--line-height-xl);
   }
-
-  header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    background-color: var(--color-white);
-    box-shadow: var(--scroll-shadow);
-    padding: 8px 16px;
-    display: flex;
-  }
-
   .page-wrapper {
     padding: 16px;
     background-color: var(--color-primary-100)
   }
 
-  .title-link {
-    display: block;
-    height: 56px;
-    color: var(--color-black);
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .title-link:hover, .title-link:visited, .title-link:active {
-    color: var(--color-black);
-  }
+  
 </style>
