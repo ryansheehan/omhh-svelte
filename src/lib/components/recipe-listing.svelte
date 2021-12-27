@@ -4,16 +4,22 @@
   import Image from '$lib/components/sanity-image.svelte';
   export let listing: RecipeListing;
 
-  const {name, description, mainImage} = listing;
+  const {name, description, mainImage, slug} = listing;
 </script>
 
-<div class="recipe-listing-wrapper">
-  <Image class="recipe-image" source={mainImage} widths={[250,140]} sizes={[`${query.laptopAndLarger} 250px`, '140px']} showCaption={false}/>
-  <h4 class="title">{name}</h4>
-  <p class="description">{description || ''}</p>
-</div>
+<a href="/recipe/{slug}">
+  <div class="recipe-listing-wrapper">
+    <Image class="recipe-image" source={mainImage} widths={[250,140]} sizes={[`${query.laptopAndLarger} 250px`, '140px']} showCaption={false}/>
+    <h4 class="title">{name}</h4>
+    <p class="description">{description || ''}</p>
+  </div>
+</a>
 
 <style>
+  a, a:hover, a:visited, a:active {
+    text-decoration: none;
+    color: inherit;
+  }
   .recipe-listing-wrapper {
     background: #fff;
     border-radius: 4px;

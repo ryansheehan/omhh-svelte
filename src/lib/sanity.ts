@@ -21,8 +21,10 @@ export const imageBuilder = imageUrlBuilder(
   }
 );
 
+const encodeQuery = query => encodeURIComponent(query.replace(/\s+/g, ''));
+
 export async function getRecipeList(fetch: Fetch) {
-  const query = encodeURIComponent(`
+  const query = encodeQuery(`
   *[_type=='recipe' && defined($all) && defined(mainImage)] | order(publishedAt desc){
     'slug': slug.current,
     mainImage,
@@ -31,7 +33,9 @@ export async function getRecipeList(fetch: Fetch) {
     publishedAt
   }
   `);
-  const data = await fetch(`${sanityUrl}?query=${query}&$all="publishedAt"`);
+  const url = `${sanityUrl}?query=${query}&$all="publishedAt"`;
+  console.log(url);
+  const data = await fetch(url);
   const json = await data.json();
   const recipes: RecipeListing[] = json.result;
   return recipes;
@@ -65,58 +69,61 @@ _type=='step' => {
 },
 `;
 
-// export async function getRecipeDataBySlug(slug: string) {
-//   const data = await client.fetch<RecipeDataInternal>(`
-//   *[_type=='recipe' && slug.current==$slug][0]{
-//     ...,
-//     author->,
-//     ingredients[]{
-//       ...,
-//       food->{
-//         ...,
-//         ingredients [] {
-//           ...,
-//           food ->
-//         }
-//       }   
-//     },
-//     post[]{
-//       ${richTextProductExpansion}
-//     },
-//     postClosing[]{
-//       ${richTextProductExpansion}
-//     },
-//     steps[]{
-//      ${richTextStepsExpansion}
-//       _type=='reference' => {
-//         _key,
-//         _type,
-//         "data": *[_id == ^._ref][0]{
-//           _id,
-//           _type,
-//           _type=='recipe' => {
-//             name,
-//             steps[]{
-//               ${richTextStepsExpansion}
-//             }
-//           }
-//         }
-//       }
-//     },
-//     "headerTags": headerTags[]->value,
-//     tags[]->{category,value},
-//   }`, {slug});
-
-//   const { ingredients, steps, ...restRecipe } = data;
-
-//   const recipe: RecipeData = {    
-//     ingredients: reduceIngredients(ingredients),
-//     steps: reduceSteps(steps),    
-//     ...restRecipe,
-//   }
-
-//   return recipe;
-// }
+export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
+  const rawQuery = `
+  *[_type=='recipe' && slug.current==$slug][0]{
+    ...,
+    author->,
+    ingredients[]{
+      ...,
+      food->{
+        ...,
+        ingredients [] {
+          ...,
+          food->
+        }
+      }   
+    },
+    post[]{
+      ${richTextProductExpansion}
+    },
+    postClosing[]{
+      ${richTextProductExpansion}
+    },
+    steps[]{
+     ${richTextStepsExpansion}
+      _type=='reference' => {
+        _key,
+        _type,
+        "data": *[_id == ^._ref][0]{
+          _id,
+          _type,
+          _type=='recipe' => {
+            name,
+            steps[]{
+              ${richTextStepsExpansion}
+            }
+          }
+        }
+      }
+    },
+    "headerTags": headerTags[]->value,
+    tags[]->{category,value},
+  }
+  `;
+  const query = encodeQuery(rawQuery);
+  const url = `${sanityUrl}?query=${query}&$slug="${slug}"`;  
+  const data = await fetch(url);
+  const json = await data.json();
+  
+  const {ingredients=[], steps=[], ...restRecipe} = json.result as RecipeDataInternal;
+  const recipe: RecipeData = {    
+    ingredients: reduceIngredients(ingredients),
+    steps: reduceSteps(steps),    
+    ...restRecipe,
+  };
+  return recipe;
+}
 
 interface RecipeDataInternal {
   _type: 'recipe';
