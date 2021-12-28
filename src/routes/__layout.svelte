@@ -20,6 +20,9 @@
   */
 
   :global(:root) {
+    --element-spacing: 1.5rem;
+    --page-padding: 16px;
+
     --font-family-header: 'Gentium Basic', serif;
     --font-family-content: 'Montserrat', sans-serif;
     --font-weight-base: 400;
@@ -73,6 +76,9 @@
     --font-size-sm:  calc(var(--font-size-base) * 0.875);
     --line-height-sm: 1.25rem;
 
+    --font-size-md:  var(--font-size-base);
+    --line-height-md: var(--line-height-base);
+
     --font-size-lg:  calc(var(--font-size-base) * 1.125);
     --line-height-lg: 1.75rem;
 
@@ -89,7 +95,7 @@
     --line-height-x4l: 2.5rem;
 
     --font-size-x5l: calc(var(--font-size-base) * 3.000); 
-    --line-height-xs: 1;
+    --line-height-x5l: 1;
   }
 
   /* Resets from https://courses.joshwcomeau.com/css-for-js/treasure-trove/010-global-styles */
@@ -211,8 +217,7 @@
     line-height: var(--line-height-xl);
   }
   .page-wrapper {
-    padding: 16px;
-    background-color: var(--color-primary-100);
+    padding: var(--page-padding);
     flex: 1;
   }
 

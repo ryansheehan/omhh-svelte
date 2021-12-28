@@ -33,8 +33,7 @@ export async function getRecipeList(fetch: Fetch) {
     publishedAt
   }
   `);
-  const url = `${sanityUrl}?query=${query}&$all="publishedAt"`;
-  console.log(url);
+  const url = `${sanityUrl}?query=${query}&$all="publishedAt"`;  
   const data = await fetch(url);
   const json = await data.json();
   const recipes: RecipeListing[] = json.result;

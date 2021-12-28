@@ -1,6 +1,9 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit';
   import {getRecipeDataBySlug, RecipeData} from '$lib/sanity';
+  import RecipeHeader from '$lib/components/recipe/recipe-header.svelte';
+  import Image from '$lib/components/sanity-image.svelte';
+  import {widths, sizes} from '$lib/components/recipe/recipe-image-responsive';
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -15,10 +18,27 @@
 
 <script lang="ts">
   export let recipe: RecipeData;  
+
+  const {
+    name,
+    headerTags,
+    mainImage,
+    description,
+    pinterestImage,
+  } = recipe;
 </script>
 
-<div>Recipe Page for {recipe.name}</div>
+<div class="recipe-page-wrapper">
+  <RecipeHeader title={name} image={mainImage} tags={headerTags} caption={description} />
+  <Image source={pinterestImage} widths={widths} sizes={sizes} showCaption={false} />
+</div>
 
 <style>
-
+  .recipe-page-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--element-spacing);
+    align-items: center;
+  }
+  
 </style>
