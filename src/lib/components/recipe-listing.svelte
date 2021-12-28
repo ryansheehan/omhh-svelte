@@ -7,7 +7,7 @@
   const {name, description, mainImage, slug} = listing;
 </script>
 
-<a href="/recipe/{slug}">
+<a href="/recipes/{slug}">
   <div class="recipe-listing-wrapper">
     <Image class="recipe-image" source={mainImage} widths={[250,140]} sizes={[`${query.laptopAndLarger} 250px`, '140px']} showCaption={false}/>
     <h4 class="title">{name}</h4>

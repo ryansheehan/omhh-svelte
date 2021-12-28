@@ -2,7 +2,7 @@
   import type {ImageData} from '$lib/sanity';
   import HeaderTags from './recipe-header-tags.svelte';
   import Image from '$lib/components/sanity-image.svelte';
-  import {widths, sizes} from './recipe-image-responsive';
+  import {widths, sizes} from '../../image-responsive';
 
   export let image: ImageData;
   export let title: string;

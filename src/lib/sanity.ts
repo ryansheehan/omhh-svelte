@@ -2,6 +2,7 @@ import {dev} from '$app/env';
 import { variables } from '$lib/variables';
 import imageUrlBuilder from '@sanity/image-url';
 import type {SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { PortableTextBlocks, } from '@portabletext/svelte/ptTypes';
 
 export type {SanityImageSource} from '@sanity/image-url/lib/types/types';
 
@@ -40,7 +41,7 @@ export async function getRecipeList(fetch: Fetch) {
   return recipes;
 }
 
-const richTextProductExpansion = `
+const richTextExpansion = `
 ...,
 children[]{
   ...,
@@ -56,6 +57,19 @@ children[]{
     }
   }
 },
+markDefs[]{
+  ...,
+  _type=='internalLink' => {
+    ...,
+    reference {
+      ...,
+      'data': *[_id == ^._ref][0]{
+        _type,
+        'slug': slug.current,
+      }
+    }
+  }
+}
 `;
 
 const richTextStepsExpansion = `
@@ -63,7 +77,7 @@ _type=='stepHeader' => {...},
 _type=='step' => {
   ...,
   instructions[]{
-    ${richTextProductExpansion}
+    ${richTextExpansion}
   }
 },
 `;
@@ -84,10 +98,10 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
       }   
     },
     post[]{
-      ${richTextProductExpansion}
+      ${richTextExpansion}
     },
     postClosing[]{
-      ${richTextProductExpansion}
+      ${richTextExpansion}
     },
     steps[]{
      ${richTextStepsExpansion}
@@ -137,8 +151,8 @@ interface RecipeDataInternal {
   pinterestImageAlt: ImageData;
   squareIGImage: ImageData;
   portions: PortionData[];
-  post: BlockData[];
-  postClosing: BlockData[];
+  post: BlockData;
+  postClosing: BlockData;
   prepTime: number;
   relatedContent: {_type: string; slug: string;}[];
   seasons: Season[];
@@ -154,7 +168,7 @@ interface RecipeDataInternal {
 
 export interface Contributor {
   name: string;
-  bio: BlockData[];
+  bio: BlockData;
   image: SanityImageSource;
   slug: { current: string };
 }
@@ -196,13 +210,14 @@ export interface MarkDefExternalLink extends MarkDefBase {
   url: string;
 }
 
-export interface BlockData {
-  _key: string;
-  _type: string;
-  style: string;
-  children: (BlockDataSpanChild | BlockDataEmojiChild)[];
-  markDefs: (MarkDefExternalLink)[];
-}
+// export interface BlockData {
+//   _key: string;
+//   _type: string;
+//   style: string;
+//   children: (BlockDataSpanChild | BlockDataEmojiChild)[];
+//   markDefs: (MarkDefExternalLink)[];
+// }
+export type BlockData = PortableTextBlocks;
 
 export interface ImageData {
   alt: string;
@@ -277,7 +292,7 @@ export interface Tag {
 export interface Step {
   _key: string;
   _type: 'step';
-  instructions: BlockData[];
+  instructions: BlockData;
 }
 
 export interface StepReference {

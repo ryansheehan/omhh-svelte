@@ -1,6 +1,7 @@
 <script lang="ts">  
   export let width: string | undefined = undefined;
-  export let height: string | undefined = undefined;  
+  export let height: string | undefined = undefined; 
+  export let verticalAlign: string = "text-top"; 
 </script>
 
 <svg 
@@ -8,6 +9,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   viewBox="0 0 158.75 158.75"
   version="1.1"
+  style="--vertical-align: {verticalAlign};"
   width={width} 
   height={height}>
   <defs id="defs1533">
@@ -180,6 +182,6 @@
 <style>
   svg {
     display: inline-block;
-    vertical-align: text-top;
+    vertical-align: var(--vertical-align);
   }
 </style>
