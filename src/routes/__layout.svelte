@@ -1,6 +1,7 @@
 <script lang="ts">  
   import AppHeader from '$lib/components/app-header.svelte'; 
   import SideNav from '$lib/components/side-nav.svelte';
+  import Footer from '$lib/components/app-footer.svelte'
 </script>
 
 <AppHeader/>
@@ -8,6 +9,8 @@
 <div class="page-wrapper">
   <slot></slot>
 </div>
+
+<Footer/>
 
 <SideNav/>
 
@@ -151,6 +154,12 @@
     isolation: isolate;
   }
 
+  :global(#svelte) {
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
   :global(#modal) {
     position: fixed; 
     top: 0;
@@ -203,7 +212,8 @@
   }
   .page-wrapper {
     padding: 16px;
-    background-color: var(--color-primary-100)
+    background-color: var(--color-primary-100);
+    flex: 1;
   }
 
   

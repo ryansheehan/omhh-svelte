@@ -26,8 +26,7 @@
 </div>
 
 <style>  
-  .listing-container {
-    background-color: var(--color-primary-50);
+  .listing-container {    
     display: flex;
     flex-flow: row wrap;
     gap: 8px;
