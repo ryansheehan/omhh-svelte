@@ -5,6 +5,7 @@
   import Image from '$lib/components/sanity-image.svelte';
   import {widths, sizes} from '$lib/image-responsive';
   import BlockContent from '$lib/components/block-content/block-content.svelte';
+  import HeartDivider from '$lib/components/heart-divider.svelte';
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -27,6 +28,7 @@
     description,
     pinterestImage,
     post,
+    postClosing,
   } = recipe;
 </script>
 
@@ -36,6 +38,8 @@
   <Image source={pinterestImage} widths={widths} sizes={sizes} showCaption={false} />
   {/if}
   <BlockContent blocks={post} />
+  <HeartDivider />
+  <BlockContent blocks={postClosing} />
 </div>
 
 <style>
