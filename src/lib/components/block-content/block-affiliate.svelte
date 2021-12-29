@@ -19,5 +19,6 @@
   a, a:hover, a:visited, a:link {
     text-decoration: none;
     color: var(--color-black);
+    white-space: nowrap;
   }
 </style>

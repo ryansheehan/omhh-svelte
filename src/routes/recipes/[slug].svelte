@@ -6,6 +6,7 @@
   import {widths, sizes} from '$lib/image-responsive';
   import BlockContent from '$lib/components/block-content/block-content.svelte';
   import HeartDivider from '$lib/components/heart-divider.svelte';
+  import RecipeCard from '$lib/components/recipe/recipe-card.svelte';
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -40,6 +41,7 @@
   <BlockContent blocks={post} />
   <HeartDivider />
   <BlockContent blocks={postClosing} />
+  <RecipeCard recipe={recipe} />
 </div>
 
 <style>

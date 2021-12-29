@@ -8,19 +8,19 @@
   import T1Ribbon from './t1-ribbon.svelte';
   import Heart from './heart.svelte';
   import AffiliateProduct from './block-affiliate.svelte';
-  import BlockTypeDebug from './block-type-debug.svelte';
-  import BlockMarkDebug from './block-mark-debug.svelte';
+  import Temperature from './temperature.svelte';
+  // import BlockTypeDebug from './block-type-debug.svelte';
+  // import BlockMarkDebug from './block-mark-debug.svelte';
  
   export let blocks: BlockData;
-
-  console.log(blocks.find(b => b._key == '4f11d4d89e26'));
+  export let spacing: string = 'var(--element-spacing)';
 
   const serializers: Serializers = {
     types: {
       emoji: Emoji,
       t1ribbon: T1Ribbon,
       heart: Heart,
-      temperature: BlockTypeDebug,
+      temperature: Temperature,
       affiliateProductReference: AffiliateProduct,
       image: Image,
     },
@@ -32,7 +32,7 @@
 </script>
 
 {#if blocks}
-<div class="portable-text">
+<div class="portable-text" style="--spacing: {spacing}">
   <PortableText blocks={blocks} serializers={serializers} />
 </div>
 {/if}
@@ -44,6 +44,6 @@
   } 
 
   .portable-text > :global(*) {
-    padding-bottom: var(--element-spacing);
+    padding-bottom: var(--spacing);
   }
 </style>
