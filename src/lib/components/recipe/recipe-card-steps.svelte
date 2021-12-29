@@ -3,7 +3,6 @@
   import type { StepGroup } from '$lib/sanity';
 
   export let stepGroups: StepGroup[];
-  console.log(stepGroups);
 </script>
 
 <h4 class="header">Steps</h4>

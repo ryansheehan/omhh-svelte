@@ -217,7 +217,7 @@
     line-height: var(--line-height-xl);
   }
   .page-wrapper {
-    padding: var(--page-padding);
+    padding: 0 var(--page-padding);
     flex: 1;
   }
 
