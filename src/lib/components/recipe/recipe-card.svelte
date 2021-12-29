@@ -49,7 +49,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .section {
     --spacing: calc(var(--element-spacing) / 2);
   }

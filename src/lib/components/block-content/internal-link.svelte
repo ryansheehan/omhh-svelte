@@ -35,7 +35,7 @@
   <span>{text}</span>
 {/if}
 
-<style>
+<style lang="postcss">
   a, a:hover, a:visited, a:link {
     color: var(--color-primary-900);
     text-decoration: underline dotted;

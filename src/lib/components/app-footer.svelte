@@ -5,7 +5,7 @@
   </small>
 </footer>
 
-<style>
+<style lang="postcss">
   footer {
     text-align: center;
     padding: 8px;

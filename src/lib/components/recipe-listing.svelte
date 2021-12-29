@@ -15,7 +15,7 @@
   </div>
 </a>
 
-<style>
+<style lang="postcss">
   a, a:hover, a:visited, a:active {
     text-decoration: none;
     color: inherit;

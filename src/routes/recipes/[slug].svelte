@@ -44,7 +44,7 @@
   <RecipeCard recipe={recipe} />
 </div>
 
-<style>
+<style lang="postcss">
   .recipe-page-wrapper {
     display: flex;
     flex-flow: column nowrap;

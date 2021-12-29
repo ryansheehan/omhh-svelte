@@ -37,7 +37,7 @@
 </div>
 {/if}
 
-<style>
+<style lang="postcss">
   .portable-text {
     font-size: var(--font-size-md);
     line-height: var(--line-height-md);

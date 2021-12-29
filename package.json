@@ -16,8 +16,10 @@
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "autoprefixer": "^10.4.1",
     "eslint": "^8.5.0",
     "eslint-plugin-svelte3": "^3.2.1",
+    "postcss-preset-env": "^7.1.0",
     "svelte": "^3.44.3",
     "svelte-check": "^2.2.11",
     "svelte-preprocess": "^4.10.1",
@@ -29,6 +31,7 @@
     "@portabletext/svelte": "^0.2.0",
     "@sanity/client": "^2.23.2",
     "@sanity/image-url": "^1.0.1",
+    "@splidejs/svelte-splide": "^0.1.15",
     "svelte-portal": "^2.1.2"
   }
 }

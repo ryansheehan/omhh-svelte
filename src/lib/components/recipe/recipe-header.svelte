@@ -29,7 +29,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .header-button-container {
     display: flex;
     justify-content: center;

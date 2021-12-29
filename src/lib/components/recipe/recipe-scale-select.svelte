@@ -25,7 +25,7 @@
   {/each}
 </div>
 
-<style>
+<style lang="postcss">
   div {
     display: flex;
     flex-flow: row wrap;

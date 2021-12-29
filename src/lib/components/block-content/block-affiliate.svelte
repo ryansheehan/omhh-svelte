@@ -15,7 +15,7 @@
 
 <a href={productUrl} target="_blank" rel="noopener">{name}<ExternalLinkIcon/></a>
 
-<style>
+<style lang="postcss">
   a, a:hover, a:visited, a:link {
     text-decoration: none;
     color: var(--color-black);

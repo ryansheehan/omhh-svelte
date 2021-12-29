@@ -17,7 +17,7 @@
   </ol>
 {/each}
 
-<style>
+<style lang="postcss">
   .header, .sub-header, ol {
     padding-bottom: var(--spacing);
   }

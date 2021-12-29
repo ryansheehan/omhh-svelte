@@ -8,7 +8,7 @@
   {/each}
 </div>
 
-<style>
+<style lang="postcss">
    .tags-container {
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xs);

@@ -12,7 +12,7 @@
 
 <span>{fahrenheit}&#8457; ({celsius}&#8451;)</span>
 
-<style>
+<style lang="postcss">
   span {
     font-weight: var(--font-weight-bold);
   }

@@ -1,25 +1,26 @@
 <script lang="ts">  
   import AppHeader from '$lib/components/app-header.svelte'; 
   import SideNav from '$lib/components/side-nav.svelte';
-  import Footer from '$lib/components/app-footer.svelte'
+  import Footer from '$lib/components/app-footer.svelte';
+  import PageWrapper from '$lib/components/page-wrapper.svelte';
 </script>
 
 <AppHeader/>
 
-<div class="page-wrapper">
+<PageWrapper>
   <slot></slot>
-</div>
+</PageWrapper>
 
 <Footer/>
 
 <SideNav/>
 
-<style>
+<style lang="postcss">
   /*
    variables
   */
 
-  :global(:root) {
+  :root {
     --element-spacing: 1.5rem;
     --page-padding: 16px;
 
@@ -97,6 +98,8 @@
     --font-size-x5l: calc(var(--font-size-base) * 3.000); 
     --line-height-x5l: 1;
   }
+
+  
 
   /* Resets from https://courses.joshwcomeau.com/css-for-js/treasure-trove/010-global-styles */
 
@@ -216,10 +219,5 @@
     font-size: var(--font-size-xl);
     line-height: var(--line-height-xl);
   }
-  .page-wrapper {
-    padding: 0 var(--page-padding);
-    flex: 1;
-  }
-
   
 </style>

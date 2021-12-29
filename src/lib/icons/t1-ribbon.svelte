@@ -179,7 +179,7 @@
   </g>
 </svg>
 
-<style>
+<style lang="postcss">
   svg {
     display: inline-block;
     vertical-align: var(--vertical-align);

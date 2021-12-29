@@ -6,7 +6,7 @@
   <OmhhLogo />
 </a>
 
-<style>
+<style lang="postcss">
   a {
     display: block;
     height: 56px;

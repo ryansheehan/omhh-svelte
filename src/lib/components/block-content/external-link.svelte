@@ -10,7 +10,7 @@
 
 <a href={url} target="_blank" rel="noopener">{text}<ExternalLinkIcon /></a>
 
-<style>
+<style lang="postcss">
   a, a:hover, a:visited, a:link {    
     color: var(--color-primary-900);
     text-decoration: underline dotted;

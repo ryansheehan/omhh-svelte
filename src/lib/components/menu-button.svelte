@@ -9,7 +9,7 @@
   <VisuallyHidden>Open Menu</VisuallyHidden>
 </button>
 
-<style>
+<style lang="postcss">
   button {
     background: transparent;
     border: none;

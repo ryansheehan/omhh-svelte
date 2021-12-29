@@ -18,7 +18,7 @@
   </ul>
 {/each}
 
-<style>
+<style lang="postcss">
   .header, .sub-header, ul {
     padding-bottom: var(--spacing);
   }

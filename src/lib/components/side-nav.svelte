@@ -15,7 +15,7 @@
   </div>
 </Modal>
 
-<style>
+<style lang="postcss">
   .side-menu-content-wrapper {
     width: min(66vw, 400px);
     height: 100%;

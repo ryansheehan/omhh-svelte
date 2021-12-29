@@ -39,7 +39,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .servings-grid .content, .time-grid .content {
     margin-left: auto;
   }
@@ -76,12 +76,16 @@
     flex: 1;
     display: grid;
     grid-template-columns: max-content 1fr;
-    row-gap: var(--row-gap);    
+    row-gap: var(--row-gap); 
+    
+    & > *:nth-child(-n + 2) {
+      padding-top: calc(var(--padding-gap));
+    }
   }
 
-  .time-grid>*:nth-child(-n + 2), .servings-grid>*:nth-child(-n + 2) {
+  /* .time-grid>*:nth-child(-n + 2), .servings-grid>*:nth-child(-n + 2) {
     padding-top: var(--padding-gap);
-  }
+  } */
 
   .time-serving-wrapper {
     border-top: 1px solid var(--color-black);
@@ -95,11 +99,6 @@
     display: grid;
     grid-template-columns: max-content 1fr;
     row-gap: var(--row-gap);
-  }
-
-  .description {
-    text-align: start;
-    padding-bottom: var(--padding-gap);
   }
 
   .recipe-card-header {

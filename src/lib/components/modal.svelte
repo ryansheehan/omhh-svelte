@@ -50,7 +50,7 @@
 </Portal>
 {/if}
 
-<style>
+<style lang="postcss">
   .backdrop, .content-wrapper {
     position: fixed;
     top: 0;

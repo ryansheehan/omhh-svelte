@@ -2,7 +2,7 @@
   <slot></slot>
 </span>
 
-<style>
+<style lang="postcss">
   .visually-hidden {
     position: absolute;
     overflow: hidden;

@@ -12,7 +12,7 @@
   <OmhhTitle />
 </header>
 
-<style>
+<style lang="postcss">
   header {
     position: sticky;
     top: 0;

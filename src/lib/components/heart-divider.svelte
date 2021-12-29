@@ -1,6 +1,6 @@
 <div />
 
-<style>
+<style lang="postcss">
   div {
     width: 100%;
     height: 1rem;

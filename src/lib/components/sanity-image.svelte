@@ -37,7 +37,7 @@
   {/if}
 </figure>
 
-<style>
+<style lang="postcss">
   figure {
     display: flex;
     flex-flow: column nowrap;

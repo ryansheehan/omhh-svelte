@@ -25,7 +25,7 @@
 {/each}
 </div>
 
-<style>  
+<style lang="postcss">  
   .listing-container {    
     display: flex;
     flex-flow: row wrap;
