@@ -97,6 +97,7 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
         }
       }   
     },
+    affiliateProducts[]->{_id, imageUrl, name, productUrl},
     post[]{
       ${richTextExpansion}
     },
@@ -138,6 +139,8 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
   return recipe;
 }
 
+
+
 interface RecipeDataInternal {
   _type: 'recipe';
   author: Contributor;
@@ -164,6 +167,7 @@ interface RecipeDataInternal {
   totalTime: number;
   totalWeight: number;
   totalServings: number;
+  affiliateProducts: AffiliateData[];
 }
 
 export interface Contributor {
@@ -184,39 +188,6 @@ export interface RecipeData extends Omit<RecipeDataInternal, 'ingredients' | 'st
   steps: StepGroup[];
 }
 
-export interface BlockDataSpanChild {
-  _key: string;
-  _type: 'span';
-  marks: string[];
-  text: string;
-}
-
-export interface BlockDataEmojiChild {
-  _key: string;
-  _type: 'emoji';
-  emoji: string;
-  names: string[];
-  originalUnified: string;
-  unified: string;
-}
-
-export interface MarkDefBase {
-  _key: string;
-  _type: string;
-} 
-
-export interface MarkDefExternalLink extends MarkDefBase {
-  _type: 'externalLink';
-  url: string;
-}
-
-// export interface BlockData {
-//   _key: string;
-//   _type: string;
-//   style: string;
-//   children: (BlockDataSpanChild | BlockDataEmojiChild)[];
-//   markDefs: (MarkDefExternalLink)[];
-// }
 export type BlockData = PortableTextBlocks;
 
 export interface ImageData {
@@ -330,6 +301,13 @@ export interface RecipeListing {
   name: string;
   description: string;
   _id: string;
+}
+
+export interface AffiliateData {
+  _id: string;   
+  imageUrl: string; // actually html code here
+  name: string;
+  productUrl: string;
 }
 
 function reduceIngredients(

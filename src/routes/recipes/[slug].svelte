@@ -7,6 +7,7 @@
   import BlockContent from '$lib/components/block-content/block-content.svelte';
   import HeartDivider from '$lib/components/heart-divider.svelte';
   import RecipeCard from '$lib/components/recipe/recipe-card.svelte';
+  import RecommendedProducts from '$lib/components/recommended-products.svelte';
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -30,6 +31,7 @@
     pinterestImage,
     post,
     postClosing,
+    affiliateProducts: products,
   } = recipe;
 </script>
 
@@ -41,6 +43,7 @@
   <BlockContent blocks={post} />
   <HeartDivider />
   <BlockContent blocks={postClosing} />
+  <RecommendedProducts {products} />
   <RecipeCard recipe={recipe} />
 </div>
 

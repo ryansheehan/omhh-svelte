@@ -1,15 +1,12 @@
 <script lang="ts">
   import type {BlockProps} from '@portabletext/svelte';
   import ExternalLinkIcon from '$lib/icons/external-link.svelte';
+  import type {AffiliateData} from '$lib/sanity';
   
-  interface AffiliateData {
-    data: {
-      imageUrl: string;
-      name: string;
-      productUrl: string;
-    }
+  interface AffiliateBlockProps {
+    data: AffiliateData;
   }
-  export let portableText: BlockProps<AffiliateData>;
+  export let portableText: BlockProps<AffiliateBlockProps>;
   const {productUrl, name} = portableText.block.data;
 </script>
 
