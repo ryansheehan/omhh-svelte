@@ -5,7 +5,7 @@
 
 <div>
   <p>Did you make this recipe?  We'd love to see!</p>
-  <p>Share it on Instagram and tag <ExternalLink {href}>@ohmyheartandhome</ExternalLink></p>
+  <p>Share it on Instagram and tag <ExternalLink {href}>@ohmyheartandhome.</ExternalLink></p>
 </div>
 
 <style lang="postcss">
