@@ -12,7 +12,7 @@
     width: '100%',
     autoplay: true,
     pauseOnHover: true,
-    perPage: 2,
+    perPage: 1,
     perMove: 1,
     pagination: true,
     arrows: false,
@@ -37,9 +37,7 @@
 <Splide options={resolvedOptions}>
   {#each images as image, index (index) }
     <SplideSlide>
-      <div class="image-container">
-        <Image source={image} widths={imageWidths} sizes={imageSizes} showCaption={false}/>
-      </div>
+      <Image source={image} widths={imageWidths} sizes={imageSizes} showCaption={false}/>
     </SplideSlide>
   {/each}
   {#each products as {_id, imageUrl} (_id)}
@@ -50,12 +48,9 @@
 </Splide>
 
 <style lang="postcss">
-  .image-container {
-    width: var(--container-width);
-  }
-
   :global(.omhh-pagination) {
-    position: relative;    
+     bottom: 0;
+     position: relative;
   }
 
   :global(li.splide__slide) {

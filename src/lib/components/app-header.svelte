@@ -21,5 +21,6 @@
     box-shadow: var(--scroll-shadow);
     padding: 8px 16px;
     display: flex;
+    z-index: 10;
   }
 </style>

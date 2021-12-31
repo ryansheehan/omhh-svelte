@@ -8,6 +8,7 @@
   import HeartDivider from '$lib/components/heart-divider.svelte';
   import RecipeCard from '$lib/components/recipe/recipe-card.svelte';
   import RecommendedProducts from '$lib/components/recommended-products.svelte';
+  import ShareMessage from '$lib/components/recipe/recipe-share-message.svelte';
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -24,19 +25,23 @@
   export let recipe: RecipeData;  
 
   const {
-    name,
-    headerTags,
+    name: title,
+    headerTags: tags,
     mainImage,
+    secondaryImage,
     description,
     pinterestImage,
+    pinterestImageAlt,
     post,
     postClosing,
     affiliateProducts: products,
   } = recipe;
+
+  const images = [mainImage, secondaryImage, pinterestImageAlt].filter(img => !!img);
 </script>
 
 <div class="recipe-page-wrapper">
-  <RecipeHeader title={name} image={mainImage} tags={headerTags} caption={description} />
+  <RecipeHeader {title} {images} {tags} caption={description} />
   {#if pinterestImage}
   <Image source={pinterestImage} widths={widths} sizes={sizes} showCaption={false} />
   {/if}
@@ -45,6 +50,7 @@
   <BlockContent blocks={postClosing} />
   <RecommendedProducts {products} />
   <RecipeCard recipe={recipe} />
+  <ShareMessage/>
 </div>
 
 <style lang="postcss">

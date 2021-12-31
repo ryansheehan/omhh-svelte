@@ -40,8 +40,17 @@
 <style lang="postcss">
   figure {
     display: flex;
-    flex-flow: column nowrap;
-    gap: calc(var(--element-spacing) * 0.5);    
+    flex-flow: column nowrap;    
+    align-items: center;
+    gap: calc(var(--element-spacing) * 0.5);  
+    width: 100%;
+    height: 100%;      
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   figcaption {

@@ -1,10 +1,9 @@
 <script lang="ts">
   import type {ImageData} from '$lib/sanity';
   import HeaderTags from './recipe-header-tags.svelte';
-  import Image from '$lib/components/sanity-image.svelte';
-  import {widths, sizes} from '../../image-responsive';
+  import RecipeImageCarousel from '$lib/components/recipe/recipe-image-carousel.svelte';
 
-  export let image: ImageData;
+  export let images: ImageData[];
   export let title: string;
   export let tags: string[] = [];
   export let caption: string;
@@ -15,14 +14,7 @@
     <HeaderTags tags={tags} />
   {/if}
   <h2 class="recipe-title">{title}</h2>
-  <Image 
-    source={image} 
-    widths={widths} 
-    sizes={sizes}     
-    captionOverride={caption}
-    captionAlign="flex-start"
-    captionFontSize="sm"
-  />
+  <RecipeImageCarousel {caption} {images} />
   <div class="header-button-container">
     <button>Jump to recipe</button>
     <button>Share</button>
