@@ -173,7 +173,7 @@ interface RecipeDataInternal {
 export interface Contributor {
   name: string;
   bio: BlockData;
-  image: SanityImageSource;
+  image: ImageData;
   slug: { current: string };
 }
 

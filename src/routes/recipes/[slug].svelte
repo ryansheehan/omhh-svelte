@@ -9,6 +9,8 @@
   import RecipeCard from '$lib/components/recipe/recipe-card.svelte';
   import RecommendedProducts from '$lib/components/recommended-products.svelte';
   import ShareMessage from '$lib/components/recipe/recipe-share-message.svelte';
+  import ContributorBio from '$lib/components/contributor-bio.svelte';
+
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -25,6 +27,7 @@
   export let recipe: RecipeData;  
 
   const {
+    author,
     name: title,
     headerTags: tags,
     mainImage,
@@ -50,7 +53,10 @@
   <BlockContent blocks={postClosing} />
   <RecommendedProducts {products} />
   <RecipeCard recipe={recipe} />
-  <ShareMessage/>
+  <ShareMessage />
+  <HeartDivider />
+  <ContributorBio {author}/>
+  <HeartDivider />
 </div>
 
 <style lang="postcss">
