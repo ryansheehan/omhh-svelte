@@ -4,7 +4,6 @@
   import Carousel from '$lib/components/carousel.svelte';
   import {widths, sizes} from '../../image-responsive';
 
-
   export let images: ImageData[];
   export let caption: string;
 
@@ -24,7 +23,7 @@
 
 <style lang="postcss">
   p {
-    text-align: flex-start;
+    text-align: center;
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xs);
     padding: 4px;

@@ -10,6 +10,7 @@
   import RecommendedProducts from '$lib/components/recommended-products.svelte';
   import ShareMessage from '$lib/components/recipe/recipe-share-message.svelte';
   import ContributorBio from '$lib/components/contributor-bio.svelte';
+  import SupportedOrganizations from '$lib/components/supported-organizations.svelte';
 
 
   export const load: Load = async ({fetch, page}) => {
@@ -56,6 +57,8 @@
   <ShareMessage />
   <HeartDivider />
   <ContributorBio {author}/>
+  <HeartDivider />
+  <SupportedOrganizations />
   <HeartDivider />
 </div>
 

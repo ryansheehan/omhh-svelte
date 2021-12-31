@@ -40,6 +40,11 @@
 </div>
 
 <style lang="postcss">
+  .description {
+    text-align: center;
+    padding-bottom: var(--padding-gap);
+  }
+
   .servings-grid .content, .time-grid .content {
     margin-left: auto;
   }
