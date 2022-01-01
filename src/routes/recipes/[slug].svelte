@@ -90,7 +90,7 @@
   }
 
   .recipe-page-wrapper :global(.reduced-width) {
-    width: calc(100% * 0.8);
+    width: 80%;
   }
   
 </style>

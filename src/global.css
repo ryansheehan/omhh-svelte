@@ -101,18 +101,16 @@
 /*
   3. Allow percentage-based heights in the application
 */
-html, body {
-  height: 100%;
+html {
+  min-height: 100%;  
+  display: flex;
+  flex-flow: column nowrap;
 }
 
-/*
-  Typographic tweaks!
-  4. Add accessible line-height
-  5. Improve text rendering
-*/
-body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+body {  
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 1 auto;
 }
 
 /*
@@ -145,7 +143,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 #svelte {
-  height: 100%;
+  flex: 1 1 auto;  
   display: flex;
   flex-flow: column nowrap;
 }
@@ -161,6 +159,7 @@ p, h1, h2, h3, h4, h5, h6 {
   setup typography
 */
 body {
+  -webkit-font-smoothing: antialiased;
   font-family: var(--font-family-content);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
