@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { ImageData } from '$lib/sanity';
+  import Image, {ImageProps} from '$lib/components/sanity-image.svelte';
   import type { Options } from '@splidejs/splide';
-  import Carousel from '$lib/components/carousel.svelte';
-  import {widths, sizes} from '../../image-responsive';
+  import Carousel, {CarouselData} from '$lib/components/carousel.svelte';
+  import {imageConfig} from '../../image-responsive';
 
   export let images: ImageData[];
   export let caption: string;
@@ -16,9 +17,19 @@
     width: '100%',
     fixedWidth: '100%',
   }
+
+  const data: CarouselData<ImageProps> = images.map((source, key) => ({
+    props: {
+      source,
+      widths: imageConfig.full.widths,
+      sizes: imageConfig.full.sizes,
+      showCaption: false,
+    },
+    key,
+  }))
 </script>
 
-<Carousel images={images} imageWidths={widths} imageSizes={sizes} {options} />
+<Carousel {options} {data} slide={Image} />
 <p>{caption}</p>
 
 <style lang="postcss">

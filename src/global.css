@@ -200,3 +200,28 @@ h5 {
   font-size: var(--font-size-xl);
   line-height: var(--line-height-xl);
 }
+
+/*
+  Customize Splide
+*/
+
+.omhh-pagination.splide__pagination {
+  bottom: 0;
+  position: relative;
+}
+
+.splide__list li.splide__slide {
+ display: flex;
+ align-items: center;
+}
+
+.omhh-carousel-page-button.splide__pagination__page {
+ background-color: var(--color-primary-600);
+}
+
+.omhh-carousel-page-button.splide__pagination__page.is-active {
+ background-color: var(--color-primary-900);
+ transform: scale(1.2);
+}
+
+  

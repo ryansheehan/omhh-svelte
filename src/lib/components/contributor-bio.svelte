@@ -3,10 +3,12 @@
   import BlockContent from '$lib/components/block-content/block-content.svelte';
   import Image from '$lib/components/sanity-image.svelte';
   import Socials from '$lib/components/socials.svelte';
-  import {widths, sizes} from '$lib/image-responsive';
+  import {imageConfig} from '$lib/image-responsive';
 
   export let author: Contributor;
-  
+
+  const {widths, sizes} = imageConfig.full;
+
   const {    
     image,
     bio

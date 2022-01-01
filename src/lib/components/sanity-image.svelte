@@ -1,5 +1,20 @@
+<script context="module" lang="ts">
+  import type {ImageData} from '$lib/sanity';
+  export interface ImageProps {
+    source: ImageData;
+    widths?: number[];
+    sizes?: string[];
+    class?: string;
+    showCaption?: boolean;
+    captionOverride?: string;
+    captionAlign?: 'center' | 'flex-start' | 'flex-end';
+    captionFontSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    quality?: number;
+  }
+</script>
+
 <script lang="ts">
-  import {imageBuilder, ImageData} from '$lib/sanity';
+  import {imageBuilder} from '$lib/sanity';
 
   export let source: ImageData;  
   export let widths: number[] = [];

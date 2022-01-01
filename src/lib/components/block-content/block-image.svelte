@@ -2,9 +2,11 @@
   import type {BlockProps} from '@portabletext/svelte';
   import Image from '$lib/components/sanity-image.svelte';
   import type {ImageData} from '$lib/sanity';
-  import {widths, sizes} from '$lib/image-responsive';
+  import {imageConfig} from '$lib/image-responsive';
   
   export let portableText: BlockProps<ImageData>;
+
+  const {widths, sizes} = imageConfig.full;
 
   const source = portableText.block;
 </script>

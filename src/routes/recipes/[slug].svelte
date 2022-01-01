@@ -3,7 +3,7 @@
   import {getRecipeDataBySlug, RecipeData} from '$lib/sanity';
   import RecipeHeader from '$lib/components/recipe/recipe-header.svelte';
   import Image from '$lib/components/sanity-image.svelte';
-  import {widths, sizes} from '$lib/image-responsive';
+  import {imageConfig} from '$lib/image-responsive';
   import BlockContent from '$lib/components/block-content/block-content.svelte';
   import HeartDivider from '$lib/components/heart-divider.svelte';
   import RecipeCard from '$lib/components/recipe/recipe-card.svelte';
@@ -11,7 +11,7 @@
   import ShareMessage from '$lib/components/recipe/recipe-share-message.svelte';
   import ContributorBio from '$lib/components/contributor-bio.svelte';
   import SupportedOrganizations from '$lib/components/supported-organizations.svelte';
-
+  import RelatedLinks from '$lib/components/recipe/recipe-related-links.svelte';
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -22,6 +22,8 @@
       }
     }
   }
+
+  const {widths, sizes} = imageConfig.full;
 </script>
 
 <script lang="ts">
@@ -35,13 +37,15 @@
     secondaryImage,
     description,
     pinterestImage,
-    pinterestImageAlt,
+    carbImage,
     post,
     postClosing,
     affiliateProducts: products,
+    alsoLike,
+    serveWith,    
   } = recipe;
 
-  const images = [mainImage, secondaryImage, pinterestImageAlt].filter(img => !!img);
+  const images = [mainImage, secondaryImage, carbImage].filter(img => !!img);
 </script>
 
 <div class="recipe-page-wrapper">
@@ -55,6 +59,12 @@
   <RecommendedProducts {products} />
   <RecipeCard recipe={recipe} />
   <ShareMessage />
+  {#if serveWith && serveWith.length > 0}
+  <RelatedLinks title="What to serve with this recipe" links={serveWith} />
+  {/if}
+  {#if alsoLike && alsoLike.length > 0}
+  <RelatedLinks title="You may also like" links={alsoLike} />
+  {/if}
   <HeartDivider />
   <ContributorBio {author}/>
   <HeartDivider />

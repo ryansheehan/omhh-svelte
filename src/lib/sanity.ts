@@ -22,7 +22,13 @@ export const imageBuilder = imageUrlBuilder(
   }
 );
 
-const encodeQuery = query => encodeURIComponent(query.replace(/\s+/g, ''));
+const encodeQuery = query => encodeURIComponent(
+  query
+  // remove all whitespace
+  .replace(/\s+/g, '')
+  // repair _ref in tags due to white space removal
+  .replace(/_refintags/g, '_ref in tags')
+);
 
 export async function getRecipeList(fetch: Fetch) {
   const query = encodeQuery(`
@@ -85,8 +91,62 @@ _type=='step' => {
 export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
   const rawQuery = `
   *[_type=='recipe' && slug.current==$slug][0]{
-    ...,
-    author->,
+    _type,
+
+    _id,
+
+    author->{name, bio, image, 'slug': slug.current},
+    
+    name,
+
+    "headerTags": headerTags[]->value,
+
+    mainImage,
+
+    secondaryImage,
+
+    description,
+
+    pinterestImage,
+
+    carbImage,
+
+    post[]{
+      ${richTextExpansion}
+    },
+
+    postClosing[]{
+      ${richTextExpansion}
+    },
+
+    affiliateProducts[]->{_id,imageUrl,name,productUrl},
+
+    'alsoLike': alsoLikeTags[]{
+      'recipes': *[_type=='recipe' && ^._ref in tags[]._ref && $slug != slug.current]{
+        'slug': slug.current,
+        'image': mainImage,
+        'name': name,
+      }
+    },
+
+    'serveWith': serveWithTags[]{
+      'recipes': *[_type=='recipe' && ^._ref in tags[]._ref && $slug != slug.current]{
+        'slug': slug.current,
+        'image': mainImage,
+        'name': name,
+      }
+    },
+
+    squareIGImage,
+
+    publishedAt,
+
+    tags[]->{category,value},
+
+    prepTime, cookTime, totalTime,
+
+    totalWeight, totalServings,
+
     ingredients[]{
       ...,
       food->{
@@ -97,13 +157,7 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
         }
       }   
     },
-    affiliateProducts[]->{_id, imageUrl, name, productUrl},
-    post[]{
-      ${richTextExpansion}
-    },
-    postClosing[]{
-      ${richTextExpansion}
-    },
+
     steps[]{
      ${richTextStepsExpansion}
       _type=='reference' => {
@@ -121,25 +175,26 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
         }
       }
     },
-    "headerTags": headerTags[]->value,
-    tags[]->{category,value},
   }
   `;
+
   const query = encodeQuery(rawQuery);
-  const url = `${sanityUrl}?query=${query}&$slug="${slug}"`;  
+  const url = `${sanityUrl}?query=${query}&$slug="${slug}"`;    
+
   const data = await fetch(url);
   const json = await data.json();
   
-  const {ingredients=[], steps=[], ...restRecipe} = json.result as RecipeDataInternal;
+  const {ingredients=[], steps=[], alsoLike=[], serveWith=[], ...restRecipe} = json.result as RecipeDataInternal;
+  
   const recipe: RecipeData = {    
     ingredients: reduceIngredients(ingredients),
     steps: reduceSteps(steps),    
+    alsoLike: reduceRecipeLinkCollection(alsoLike),
+    serveWith: reduceRecipeLinkCollection(serveWith),
     ...restRecipe,
   };
   return recipe;
 }
-
-
 
 interface RecipeDataInternal {
   _type: 'recipe';
@@ -151,13 +206,12 @@ interface RecipeDataInternal {
   mainImage: ImageData;
   name: string;
   pinterestImage: ImageData;
-  pinterestImageAlt: ImageData;
+  carbImage: ImageData;
   squareIGImage: ImageData;
   portions: PortionData[];
   post: BlockData;
   postClosing: BlockData;
-  prepTime: number;
-  relatedContent: {_type: string; slug: string;}[];
+  prepTime: number;  
   seasons: Season[];
   secondaryImage: ImageData;
   slug: { current: string };
@@ -166,15 +220,17 @@ interface RecipeDataInternal {
   headerTags: string[];
   totalTime: number;
   totalWeight: number;
-  totalServings: number;
+  totalServings: number;  
   affiliateProducts: AffiliateData[];
+  alsoLike: RecipeLinkCollection[];
+  serveWith: RecipeLinkCollection[];
 }
 
 export interface Contributor {
   name: string;
   bio: BlockData;
   image: ImageData;
-  slug: { current: string };
+  slug: string;
 }
 
 export interface StepGroup {
@@ -183,9 +239,12 @@ export interface StepGroup {
   steps: Step[];
 }
 
-export interface RecipeData extends Omit<RecipeDataInternal, 'ingredients' | 'steps'> {
+type RecipeInternalExcludeProps = 'ingredients' | 'steps' | 'alsoLike' | 'serveWith';
+export interface RecipeData extends Omit<RecipeDataInternal, RecipeInternalExcludeProps> {
   ingredients: IngredientGroup[];
   steps: StepGroup[];
+  serveWith: RelatedLink[];
+  alsoLike: RelatedLink[];
 }
 
 export type BlockData = PortableTextBlocks;
@@ -310,6 +369,19 @@ export interface AffiliateData {
   productUrl: string;
 }
 
+export interface RelatedLink {
+  image: ImageData;
+  href: string;
+  name: string;
+}
+interface RecipeLinkCollection {
+  recipes: {
+    image: ImageData;
+    slug: string;
+    name: string;
+  }[];
+}
+
 function reduceIngredients(
   data: (IngredientData | IngredientHeader)[], 
   scaleNumerator = 1,
@@ -381,5 +453,21 @@ function reduceSteps(
   }
 
   return groups;
+}
+
+function reduceRecipeLinkCollection(data: RecipeLinkCollection[]) {
+  const uniqueSet = new Set<string>();
+  const collection: RelatedLink[] = [];
+  for(let col = 0; col < data.length; col++) {
+    const {recipes} = data[col];
+    for(let i = 0; i < recipes.length; i++) {
+      const {image, slug, name} = recipes[i];      
+      if (!uniqueSet.has(slug)) {
+        uniqueSet.add(slug);
+        collection.push({image, href: `/recipes/${slug}`, name: name});
+      }      
+    }
+  }
+  return collection;
 }
 
