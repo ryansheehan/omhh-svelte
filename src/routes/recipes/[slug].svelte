@@ -12,6 +12,7 @@
   import ContributorBio from '$lib/components/contributor-bio.svelte';
   import SupportedOrganizations from '$lib/components/supported-organizations.svelte';
   import RelatedLinks from '$lib/components/recipe/recipe-related-links.svelte';
+  import RecipeGallery from '$lib/components/recipe/recipe-gallery.svelte';
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -42,8 +43,12 @@
     postClosing,
     affiliateProducts: products,
     alsoLike,
-    serveWith,    
+    serveWith,   
+    serveWithName, 
+    gallery,
   } = recipe;
+
+  console.log(gallery);
 
   const images = [mainImage, secondaryImage, carbImage].filter(img => !!img);
 </script>
@@ -59,11 +64,14 @@
   <RecommendedProducts {products} />
   <RecipeCard recipe={recipe} />
   <ShareMessage />
-  {#if serveWith && serveWith.length > 0}
-  <RelatedLinks title="What to serve with this recipe" links={serveWith} />
+  {#if serveWith?.length > 0}
+  <RelatedLinks title="What to serve with {serveWithName || 'this recipe'}" links={serveWith} />
   {/if}
-  {#if alsoLike && alsoLike.length > 0}
+  {#if alsoLike?.length > 0}
   <RelatedLinks title="You may also like" links={alsoLike} />
+  {/if}
+  {#if gallery?.length > 0}
+  <RecipeGallery images={gallery}/>
   {/if}
   <HeartDivider />
   <ContributorBio {author}/>

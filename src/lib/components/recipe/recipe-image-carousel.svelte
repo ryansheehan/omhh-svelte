@@ -6,7 +6,8 @@
   import {imageConfig} from '../../image-responsive';
 
   export let images: ImageData[];
-  export let caption: string;
+  export let caption: string = '';
+  export let lazyLoad: boolean = false;
 
   const options: Options = {
     type: 'slide',
@@ -16,6 +17,7 @@
     heightRatio: 1.5,
     width: '100%',
     fixedWidth: '100%',
+    lazyLoad,
   }
 
   const data: CarouselData<ImageProps> = images.map((source, key) => ({
@@ -30,7 +32,9 @@
 </script>
 
 <Carousel {options} {data} slide={Image} />
+{#if caption}
 <p>{caption}</p>
+{/if}
 
 <style lang="postcss">
   p {

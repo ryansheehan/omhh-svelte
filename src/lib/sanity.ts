@@ -137,6 +137,10 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
       }
     },
 
+    serveWithName,
+
+    gallery,
+
     squareIGImage,
 
     publishedAt,
@@ -187,10 +191,10 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
   const {ingredients=[], steps=[], alsoLike=[], serveWith=[], ...restRecipe} = json.result as RecipeDataInternal;
   
   const recipe: RecipeData = {    
-    ingredients: reduceIngredients(ingredients),
-    steps: reduceSteps(steps),    
-    alsoLike: reduceRecipeLinkCollection(alsoLike),
-    serveWith: reduceRecipeLinkCollection(serveWith),
+    ingredients: reduceIngredients(ingredients || []),
+    steps: reduceSteps(steps || []),    
+    alsoLike: reduceRecipeLinkCollection(alsoLike || []),
+    serveWith: reduceRecipeLinkCollection(serveWith || []),
     ...restRecipe,
   };
   return recipe;
@@ -224,6 +228,8 @@ interface RecipeDataInternal {
   affiliateProducts: AffiliateData[];
   alsoLike: RecipeLinkCollection[];
   serveWith: RecipeLinkCollection[];
+  serveWithName: string;
+  gallery: ImageData[];
 }
 
 export interface Contributor {
