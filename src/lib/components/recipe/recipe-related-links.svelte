@@ -9,7 +9,10 @@
 <RelatedLinksCarousel {links} />
 
 <style lang="postcss">
-  .title:after {
-    content: ':';
+  .title {
+    text-align: center;
+    &:after {
+      content: ':';
+    }
   }
 </style>

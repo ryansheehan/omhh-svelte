@@ -7,7 +7,7 @@
   import BlockContent from '$lib/components/block-content/block-content.svelte';
   import HeartDivider from '$lib/components/heart-divider.svelte';
   import RecipeCard from '$lib/components/recipe/recipe-card.svelte';
-  import RecommendedProducts from '$lib/components/recommended-products.svelte';
+  import RecommendedProducts from '$lib/components/recommended-products-carousel.svelte';
   import ShareMessage from '$lib/components/recipe/recipe-share-message.svelte';
   import ContributorBio from '$lib/components/contributor-bio.svelte';
   import SupportedOrganizations from '$lib/components/supported-organizations.svelte';
@@ -62,9 +62,6 @@
   <RecommendedProducts {products} />
   <RecipeCard recipe={recipe} />
   <ShareMessage />
-  {#if carbImage}
-  <Image class="reduced-width" source={carbImage} widths={widths} sizes={sizes} showCaption={false} />
-  {/if}
   {#if serveWith?.length > 0}
   <RelatedLinks title="What to serve with {serveWithName || 'this recipe'}" links={serveWith} />
   {/if}
