@@ -48,8 +48,6 @@
     gallery,
   } = recipe;
 
-  console.log(gallery);
-
   const images = [mainImage, secondaryImage, carbImage].filter(img => !!img);
 </script>
 
@@ -64,6 +62,9 @@
   <RecommendedProducts {products} />
   <RecipeCard recipe={recipe} />
   <ShareMessage />
+  {#if carbImage}
+  <Image class="reduced-width" source={carbImage} widths={widths} sizes={sizes} showCaption={false} />
+  {/if}
   {#if serveWith?.length > 0}
   <RelatedLinks title="What to serve with {serveWithName || 'this recipe'}" links={serveWith} />
   {/if}
@@ -86,6 +87,10 @@
     flex-flow: column nowrap;
     gap: var(--element-spacing);
     align-items: center;
+  }
+
+  .recipe-page-wrapper :global(.reduced-width) {
+    width: calc(100% * 0.8);
   }
   
 </style>
