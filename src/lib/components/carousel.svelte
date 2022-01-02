@@ -31,7 +31,6 @@
 
   export let options: Options = { }
   export let data: CarouselData<any> = [];
-  export let slide: typeof SvelteComponent;
 
   const resolvedOptions = {
     ...defaultOptions,
@@ -42,7 +41,7 @@
 <Splide options={resolvedOptions}>
   {#each data as {props, key} (key)}
     <SplideSlide>
-      <svelte:component this={slide} {...props}/>
+      <slot {props}></slot>
     </SplideSlide>
   {/each}
 </Splide>

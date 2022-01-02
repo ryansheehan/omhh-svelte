@@ -31,7 +31,9 @@
   }))
 </script>
 
-<Carousel {options} {data} slide={Image} />
+<Carousel {options} {data} let:props>
+  <Image {...props} />
+</Carousel>
 {#if caption}
 <p>{caption}</p>
 {/if}

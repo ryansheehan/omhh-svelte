@@ -29,4 +29,6 @@
   }
 </script>
 
-<Carousel {data} {options} slide={RelatedLinkComponent} />
+<Carousel {data} {options} let:props>
+  <RelatedLinkComponent {...props} />
+</Carousel>
