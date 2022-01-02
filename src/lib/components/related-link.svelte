@@ -27,7 +27,7 @@
   a {
     display: flex;
     flex-flow: column nowrap;
-    gap: calc(var(--element-spacing) * 0.5);
+    gap: var(--half-element-spacing);
     text-align: center;    
   }
 

@@ -2,11 +2,12 @@
   import type {ImageData} from '$lib/sanity';
   import HeaderTags from './recipe-header-tags.svelte';
   import RecipeImageCarousel from '$lib/components/recipe/recipe-image-carousel.svelte';
+  import Button from '$lib/components/button.svelte';
 
   export let images: ImageData[];
   export let title: string;
   export let tags: string[] = [];
-  export let caption: string;
+  export let caption: string;  
 </script>
 
 <div class="recipe-header-wrapper">
@@ -15,9 +16,10 @@
   {/if}
   <h2 class="recipe-title">{title}</h2>
   <RecipeImageCarousel {caption} {images} />
+  
   <div class="header-button-container">
-    <button>Jump to recipe</button>
-    <button>Share</button>
+    <Button>Jump to recipe</Button>
+    <Button>Share</Button>
   </div>
 </div>
 
@@ -27,13 +29,6 @@
     justify-content: center;
     gap: 16px;
     width: 100%;
-  }
-
-  button {
-    flex: 1;  
-    border: 1px solid var(--color-black);
-    padding: 4px;  
-    background-color: var(--color-primary-400);
   }
 
   .recipe-header-wrapper {

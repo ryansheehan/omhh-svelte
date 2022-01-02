@@ -13,6 +13,7 @@
   import SupportedOrganizations from '$lib/components/supported-organizations.svelte';
   import RelatedLinks from '$lib/components/recipe/recipe-related-links.svelte';
   import RecipeGallery from '$lib/components/recipe/recipe-gallery.svelte';
+  import EmailSignup from '$lib/components/email-signup.svelte';
 
   export const load: Load = async ({fetch, page}) => {
     const slug = page.params.slug;
@@ -76,6 +77,7 @@
   <HeartDivider />
   <SupportedOrganizations />
   <HeartDivider />
+  <EmailSignup />
 </div>
 
 <style lang="postcss">

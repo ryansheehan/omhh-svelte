@@ -57,7 +57,7 @@
     display: flex;
     flex-flow: column nowrap;    
     align-items: center;
-    gap: calc(var(--element-spacing) * 0.5);  
+    gap: var(--half-element-spacing);  
     width: 100%;
     height: 100%;      
   }

@@ -3,6 +3,7 @@
 */
 :root {
   --element-spacing: 1.5rem;
+  --half-element-spacing: calc(var(--element-spacing) / 2);
   --page-padding: 16px;
 
   --font-family-header: 'Gentium Basic', serif;

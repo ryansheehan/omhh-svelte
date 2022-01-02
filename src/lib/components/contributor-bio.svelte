@@ -17,7 +17,7 @@
 
 <div>
   <Image source={image} {widths} {sizes} showCaption={false} />
-  <BlockContent blocks={bio} spacing='calc(var(--element-spacing)*0.5)' />
+  <BlockContent blocks={bio} spacing='var(--half-element-spacing)' />
   <Socials/>
 </div>
 
@@ -26,6 +26,6 @@
     text-align: center;
     display: flex;
     flex-flow: column;
-    gap: calc(var(--element-spacing) * 0.5);
+    gap: var(--half-element-spacing);
   }
 </style>

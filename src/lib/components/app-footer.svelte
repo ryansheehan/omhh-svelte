@@ -5,11 +5,12 @@
 
 <style lang="postcss">
   footer {
-    padding: 8px var(--page-padding);
+    padding: var(--half-element-spacing) var(--page-padding);
     text-align: center;
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xs);
     background-color: var(--color-primary-50);
+    margin-top: var(--half-element-spacing);
   }
 
   /* small {

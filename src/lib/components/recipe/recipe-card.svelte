@@ -51,7 +51,7 @@
 
 <style lang="postcss">
   .section {
-    --spacing: calc(var(--element-spacing) / 2);
+    --spacing: var(--half-element-spacing);
   }
 
   .recipe-card-wrapper :global(.recipe-card-image) {
