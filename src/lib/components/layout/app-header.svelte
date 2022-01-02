@@ -1,6 +1,6 @@
 <script lang="ts">
-  import MenuButton from '$lib/components/menu-button.svelte';
-  import OmhhTitle from '$lib/components/omhh-title.svelte';
+  import MenuButton from './menu-button.svelte';
+  import OmhhTitle from './omhh-title.svelte';
 
   let y;  
 </script>

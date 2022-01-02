@@ -2,7 +2,7 @@
   import type {ImageData} from '$lib/sanity';
   import HeaderTags from './recipe-header-tags.svelte';
   import RecipeImageCarousel from '$lib/components/recipe/recipe-image-carousel.svelte';
-  import Button from '$lib/components/button.svelte';
+  import Button from '$lib/components/controls/button.svelte';
 
   export let images: ImageData[];
   export let title: string;

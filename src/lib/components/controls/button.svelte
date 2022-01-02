@@ -16,6 +16,7 @@
     &:disabled {
       border: none;
       background-color: var(--color-primary-300);
+      cursor: auto;
     }
   }
 </style>

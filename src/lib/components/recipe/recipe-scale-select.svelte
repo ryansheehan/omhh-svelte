@@ -1,5 +1,5 @@
 <script lang="ts">
-  import VisuallyHidden from '$lib/components/visuall-hiddent.svelte';
+  import VisuallyHidden from '$lib/components/controls/visually-hidden.svelte';
   import { scale, scaleValues, Scale } from '$lib/store/recipe-scale';
   import { printFraction } from '$lib/fraction';
 

@@ -14,7 +14,7 @@
 </script>
 
 <script lang="ts" >
-  import Listing from '$lib/components/recipe-listing.svelte';
+  import Listing from '$lib/components/landing/recipe-listing.svelte';
 
   export let recipes;
 </script>

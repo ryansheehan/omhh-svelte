@@ -1,9 +1,9 @@
 <script lang="ts">  
   import '../global.css';  
-  import AppHeader from '$lib/components/app-header.svelte'; 
-  import SideNav from '$lib/components/side-nav.svelte';
-  import Footer from '$lib/components/app-footer.svelte';
-  import PageWrapper from '$lib/components/page-wrapper.svelte';
+  import AppHeader from '$lib/components/layout/app-header.svelte'; 
+  import SideNav from '$lib/components/layout/side-nav.svelte';
+  import Footer from '$lib/components/layout/app-footer.svelte';
+  import PageWrapper from '$lib/components/layout/page-wrapper.svelte';
 </script>
 
 <AppHeader/>

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Button from '$lib/components/button.svelte'
-  import Input from '$lib/components/input-text.svelte';
+  import Button from '$lib/components/controls/button.svelte'
+  import Input from '$lib/components/controls/input-text.svelte';
   import { useForm, Hint, required, email } from 'svelte-use-form';
   import { subscribe } from '$lib/subscribe';
   
@@ -56,9 +56,9 @@
   <h4>Want more?<br/>Subscribe to stay up to date with the latest!</h4>
   <form use:form on:submit|preventDefault={onSubmit}>
     <label for="name">Name:</label>
-    <Input type="text" name="name" id="name" placeholder="First Name" disabled={submitting}/>
+    <Input class="input" type="text" name="name" id="name" placeholder="First Name" disabled={submitting}/>
     <label for="email">Email:</label>
-    <Input type="email" name="email" id="email" placeholder="email@domain.com" disabled={submitting}/>
+    <Input class="input" type="email" name="email" id="email" placeholder="email@domain.com" disabled={submitting}/>
     <Button class="submit-button" type="submit" disabled={!$form.valid || submitting}>
       {submitting ? 'Submitting...' : 'Subscribe'}
     </Button>
@@ -80,13 +80,24 @@
     justify-content: center;
     text-align: center;
     gap: var(--half-element-spacing);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-lg);
+    width: 100%;
   }
+
   form {
+    width: 100%;
     display: grid;
     grid-template-columns: auto 1fr;
     justify-items: center;
     align-items: center;
+    row-gap: 16px;
     gap: 8px;
+    padding: 0 16px;
+  }
+
+  form :global(.input) {
+    width: 100%;
   }
 
   form :global(.submit-button) {

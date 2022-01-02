@@ -2,7 +2,7 @@
   import Carousel, {CarouselData} from '$lib/components/carousel.svelte';
   import ProceedsMessage from '$lib/components/proceeds-message.svelte';
   import type {AffiliateData} from '$lib/sanity';  
-  import AffiliateProductLink from '$lib/components/affiliate-product-link.svelte';
+  import AffiliateProductLink from '$lib/components/affiliate/affiliate-product-link.svelte';
 
   export let products: AffiliateData[];
 

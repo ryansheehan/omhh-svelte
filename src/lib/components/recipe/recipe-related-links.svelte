@@ -1,5 +1,5 @@
 <script lang="ts">
-  import RelatedLinksCarousel, {RelatedLinks} from '$lib/components/related-links-carousel.svelte';
+  import RelatedLinksCarousel, {RelatedLinks} from '$lib/components/related-links/related-links-carousel.svelte';
   
   export let title: string;
   export let links: RelatedLinks;

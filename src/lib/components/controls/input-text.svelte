@@ -14,7 +14,26 @@
 >
 
 <style lang="postcss">
-  input:focus-visible {
+  /* input:focus-visible {
     outline: 4px dashed darkorange;
+  } */
+
+  input {
+    border: 1px solid var(--color-primary-400);
+    border-radius: 4px;
+    padding: 8px;
+    padding-left: 12px;
+
+    &::placeholder {
+      color: var(--color-primary-800);
+    }
+
+    &:disabled {
+      border-color: var(--color-primary-300);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary-600);
+    }
   }
 </style>

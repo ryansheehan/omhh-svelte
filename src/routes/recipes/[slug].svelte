@@ -20,13 +20,13 @@
   import BlockContent from '$lib/components/block-content/block-content.svelte';
   import HeartDivider from '$lib/components/heart-divider.svelte';
   import RecipeCard from '$lib/components/recipe/recipe-card.svelte';
-  import RecommendedProducts from '$lib/components/recommended-products-carousel.svelte';
+  import RecommendedProducts from '$lib/components/affiliate/recommended-products-carousel.svelte';
   import ShareMessage from '$lib/components/recipe/recipe-share-message.svelte';
   import ContributorBio from '$lib/components/contributor-bio.svelte';
   import SupportedOrganizations from '$lib/components/supported-organizations.svelte';
   import RelatedLinks from '$lib/components/recipe/recipe-related-links.svelte';
   import RecipeGallery from '$lib/components/recipe/recipe-gallery.svelte';
-  import EmailSignup from '$lib/components/email-signup.svelte';
+  import EmailSignup from '$lib/components/forms/email-signup.svelte';
 
   const {widths, sizes} = imageConfig.full;
 
@@ -87,11 +87,6 @@
     display: flex;
     flex-flow: column nowrap;
     gap: var(--element-spacing);
-    align-items: center;
+    align-items: center;    
   }
-
-  .recipe-page-wrapper :global(.reduced-width) {
-    width: 80%;
-  }
-  
 </style>

@@ -10,7 +10,7 @@
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xs);
     background-color: var(--color-primary-50);
-    margin-top: var(--half-element-spacing);
+    margin-top: var(--element-spacing);
   }
 
   /* small {

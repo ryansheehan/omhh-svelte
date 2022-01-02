@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import Carousel, {CarouselData} from '$lib/components/carousel.svelte';
-  import RelatedLinkComponent from '$lib/components/related-link.svelte';  
+  import RelatedLinkComponent from '$lib/components/related-links/related-link.svelte';  
   import type { Options } from '@splidejs/splide';
 
   export let links: RelatedLinks = [];

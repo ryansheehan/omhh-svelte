@@ -1,6 +1,6 @@
 <script lang="ts">
   import MenuIcon from '$lib/icons/menu.svelte';
-  import VisuallyHidden from '$lib/components/visuall-hiddent.svelte';
+  import VisuallyHidden from '$lib/components/controls/visually-hidden.svelte';
   import {open} from '$lib/store/modal';
 </script>
 
