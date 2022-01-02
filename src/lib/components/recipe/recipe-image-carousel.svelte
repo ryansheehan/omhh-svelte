@@ -3,7 +3,7 @@
   import Image, {ImageProps} from '$lib/components/sanity-image.svelte';
   import type { Options } from '@splidejs/splide';
   import Carousel, {CarouselData} from '$lib/components/carousel.svelte';
-  import {imageConfig} from '../../image-responsive';
+  import {imageConfig} from '../../responsive';
 
   export let images: ImageData[];
   export let caption: string = '';

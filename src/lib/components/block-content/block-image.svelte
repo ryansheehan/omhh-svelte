@@ -2,7 +2,7 @@
   import type {BlockProps} from '@portabletext/svelte';
   import Image from '$lib/components/sanity-image.svelte';
   import type {ImageData} from '$lib/sanity';
-  import {imageConfig} from '$lib/image-responsive';
+  import {imageConfig} from '$lib/responsive';
   
   export let portableText: BlockProps<ImageData>;
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { RelatedLink } from '$lib/sanity';
   import Image from '$lib/components/sanity-image.svelte';
-  import { imageConfig } from '$lib/image-responsive';
+  import { imageConfig } from '$lib/responsive';
 
   export let link: RelatedLink;
   const {

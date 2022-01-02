@@ -6,8 +6,8 @@ import type { PortableTextBlocks, } from '@portabletext/svelte/ptTypes';
 
 export type {SanityImageSource} from '@sanity/image-url/lib/types/types';
 
-const {projectId, dataset} = variables;
-const apiVersion = 'v2021-08-15';
+const {projectId, dataset, version} = variables.sanity;
+const apiVersion = version;
 const useCdn = !dev;
 const apiHost = 'https://api.sanity.io';
 const sanityUrl = `https://${projectId}.${useCdn ? 'apicdn.sanity.io' : 'api.sanity.io'}/${apiVersion}/data/query/${dataset}`;

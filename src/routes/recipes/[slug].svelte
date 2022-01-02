@@ -1,9 +1,22 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit';
   import {getRecipeDataBySlug, RecipeData} from '$lib/sanity';
+
+  export const load: Load = async ({fetch, page}) => {
+    const slug = page.params.slug;
+    const recipe = await getRecipeDataBySlug(slug, fetch);
+    return {
+      props: {
+        recipe,
+      }
+    }
+  }
+</script>
+
+<script lang="ts">
+  import {imageConfig} from '$lib/responsive';
   import RecipeHeader from '$lib/components/recipe/recipe-header.svelte';
-  import Image from '$lib/components/sanity-image.svelte';
-  import {imageConfig} from '$lib/image-responsive';
+  import Image from '$lib/components/sanity-image.svelte';  
   import BlockContent from '$lib/components/block-content/block-content.svelte';
   import HeartDivider from '$lib/components/heart-divider.svelte';
   import RecipeCard from '$lib/components/recipe/recipe-card.svelte';
@@ -15,20 +28,9 @@
   import RecipeGallery from '$lib/components/recipe/recipe-gallery.svelte';
   import EmailSignup from '$lib/components/email-signup.svelte';
 
-  export const load: Load = async ({fetch, page}) => {
-    const slug = page.params.slug;
-    const recipe = await getRecipeDataBySlug(slug, fetch);
-    return {
-      props: {
-        recipe,
-      }
-    }
-  }
-
   const {widths, sizes} = imageConfig.full;
-</script>
 
-<script lang="ts">
+
   export let recipe: RecipeData;  
 
   const {
@@ -77,7 +79,7 @@
   <HeartDivider />
   <SupportedOrganizations />
   <HeartDivider />
-  <EmailSignup />
+  <EmailSignup from="recipe" />
 </div>
 
 <style lang="postcss">

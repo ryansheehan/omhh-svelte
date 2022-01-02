@@ -1,26 +1,26 @@
 <script lang="ts">
+  import VisuallyHidden from '$lib/components/visuall-hiddent.svelte';
   import { scale, scaleValues, Scale } from '$lib/store/recipe-scale';
   import { printFraction } from '$lib/fraction';
 
-  export const onChecked = (evt: Event) => {
-    const target = evt.target as HTMLInputElement;
-    const value = (target.value as unknown) as Scale;
-    scale.set(value);    
-  }
-
   const inputs = [Scale.half, Scale.x1, Scale.x2, Scale.x3];
+
+  let selectedScale: Scale = Scale.x1;
+
+  $: $scale = selectedScale;
 </script>
 
 <div>
   {#each inputs as item}
-    <input 
-      type="radio" 
-      name="recipe-scale" 
-      value={item} 
-      id={item} 
-      checked={$scale === scaleValues[item]}
-      on:change|preventDefault={onChecked}
-    >
+    <VisuallyHidden>
+      <input 
+        type="radio" 
+        name="recipe-scale" 
+        value={item} 
+        id={item}
+        bind:group={selectedScale}
+      >
+    </VisuallyHidden>
     <label class:selected={$scale === scaleValues[item]} for={item}>{printFraction(scaleValues[item])}</label>
   {/each}
 </div>
@@ -31,10 +31,6 @@
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-end;
-  }
-
-  input {
-    display: none;
   }
 
   label.selected {

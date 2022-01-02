@@ -11,5 +11,11 @@
     padding: 8px 16px;  
     background-color: var(--color-primary-400);    
     cursor: pointer;
+    box-shadow: var(--shadow-elevation-low);
+
+    &:disabled {
+      border: none;
+      background-color: var(--color-primary-300);
+    }
   }
 </style>
