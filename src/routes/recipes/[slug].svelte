@@ -52,10 +52,14 @@
   } = recipe;
 
   const images = [mainImage, secondaryImage, carbImage].filter(img => !!img);
+
+  let recipeCard: RecipeCard;
+  
+  const scrollToRecipe = () => recipeCard?.scrollTo();
 </script>
 
 <div class="recipe-page-wrapper">
-  <RecipeHeader {title} {images} {tags} caption={description} />
+  <RecipeHeader {title} {images} {tags} caption={description} on:scrollToRecipe={scrollToRecipe} />
   {#if pinterestImage}
   <Image source={pinterestImage} widths={widths} sizes={sizes} showCaption={false} />
   {/if}
@@ -63,7 +67,7 @@
   <HeartDivider />
   <BlockContent blocks={postClosing} />
   <RecommendedProducts {products} />
-  <RecipeCard recipe={recipe} />
+  <RecipeCard recipe={recipe} bind:this={recipeCard} />
   <ShareMessage />
   {#if serveWith?.length > 0}
   <RelatedLinks title="What to serve with {serveWithName || 'this recipe'}" links={serveWith} />

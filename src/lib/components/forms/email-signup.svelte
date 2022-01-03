@@ -73,6 +73,7 @@
 </div>
 
 <style lang="postcss">
+
   .signup-wrapper {
     display: flex;
     flex-direction: column;

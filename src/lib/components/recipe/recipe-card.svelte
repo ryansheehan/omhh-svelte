@@ -6,6 +6,9 @@
   import RecipeCardSteps from '$lib/components/recipe/recipe-card-steps.svelte';
 
   export let recipe: RecipeData;
+  
+  let scrollToTarget: HTMLElement;
+  export const scrollTo = () => scrollToTarget?.scrollIntoView({behavior: 'smooth', block: 'start'});
 
   const {
     squareIGImage,
@@ -39,7 +42,9 @@
 </script>
 
 <div class="recipe-card-wrapper">
-  <Image class="recipe-card-image" source={squareIGImage} widths={[150]} sizes={['150px']} showCaption={false} />  
+  <div class="recipe-card-image" bind:this={scrollToTarget}>
+    <Image source={squareIGImage} widths={[150]} sizes={['150px']} showCaption={false} />  
+  </div>
   <RecipeCardHeader {...headerProps} />
   <div class="section">    
     <RecipeCardIngredients ingredientGroups={ingredients} />
@@ -54,7 +59,7 @@
     --spacing: var(--half-element-spacing);
   }
 
-  .recipe-card-wrapper :global(.recipe-card-image) {
+  .recipe-card-image {
     width: var(--recipe-card-image-size);
     border: var(--recipe-card-border);
     position: relative;

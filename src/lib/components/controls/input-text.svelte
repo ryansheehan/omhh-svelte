@@ -14,10 +14,6 @@
 >
 
 <style lang="postcss">
-  /* input:focus-visible {
-    outline: 4px dashed darkorange;
-  } */
-
   input {
     border: 1px solid var(--color-primary-400);
     border-radius: 4px;

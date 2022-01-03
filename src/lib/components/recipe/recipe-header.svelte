@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
   import type {ImageData} from '$lib/sanity';
   import HeaderTags from './recipe-header-tags.svelte';
   import RecipeImageCarousel from '$lib/components/recipe/recipe-image-carousel.svelte';
@@ -8,6 +9,9 @@
   export let title: string;
   export let tags: string[] = [];
   export let caption: string;  
+
+  const dispatch = createEventDispatcher();
+  const onJumpToRecipe = () => dispatch('scrollToRecipe');  
 </script>
 
 <div class="recipe-header-wrapper">
@@ -18,7 +22,7 @@
   <RecipeImageCarousel {caption} {images} />
   
   <div class="header-button-container">
-    <Button>Jump to recipe</Button>
+    <Button on:click={onJumpToRecipe}>Jump to recipe</Button>
     <Button>Share</Button>
   </div>
 </div>
