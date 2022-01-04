@@ -4,6 +4,7 @@
   import RecipeCardHeader from '$lib/components/recipe/recipe-card-header.svelte';
   import RecipeCardIngredients from '$lib/components/recipe/recipe-card-ingredients.svelte';
   import RecipeCardSteps from '$lib/components/recipe/recipe-card-steps.svelte';
+  import RecipeCardNotes from '$lib/components/recipe/recipe-card-notes.svelte';
 
   export let recipe: RecipeData;
   
@@ -51,6 +52,9 @@
   </div>
   <div class="section">
     <RecipeCardSteps stepGroups={steps} />
+  </div>
+  <div class="section">
+    <RecipeCardNotes ingredientGroups={ingredients} />
   </div>
 </div>
 

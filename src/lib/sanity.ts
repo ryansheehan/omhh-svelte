@@ -161,9 +161,18 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
           food-> {
             ...,
             productSuggestion->{_id,name,productUrl},
-          }
+            notes[] {
+              ${richTextExpansion}
+            }
+          },
+          notes[] {
+            ${richTextExpansion}
+          }         
         }
-      }   
+      },
+      notes[] {
+        ${richTextExpansion}
+      }  
     },
 
     steps[]{
@@ -308,6 +317,7 @@ export interface FoodData {
   optional: boolean;
   unit: string;
   productSuggestion?: AffiliateData;
+  notes?: BlockData;
 }
 
 export interface IngredientData {
