@@ -56,7 +56,7 @@
   }
 
   .publish-date:before {
-    content: '|';
+    content: '\2022';
     padding: 0 1ch;
   }
 

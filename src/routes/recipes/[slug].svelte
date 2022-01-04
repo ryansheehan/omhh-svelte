@@ -1,9 +1,8 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit';
+<script lang="ts" context="module">  
   import {getRecipeDataBySlug, RecipeData} from '$lib/sanity';
 
-  export const load: Load = async ({fetch, page}) => {
-    const slug = page.params.slug;
+  export const load = async ({params, fetch}) => {    
+    const slug = params.slug;
     const recipe = await getRecipeDataBySlug(slug, fetch);
     return {
       props: {
