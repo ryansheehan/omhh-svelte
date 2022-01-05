@@ -15,8 +15,9 @@
     arrows: false,
     pagination: true,
     heightRatio: 1.5,
-    width: '100%',
-    fixedWidth: '100%',
+    perPage: undefined,
+    perMove: undefined,    
+    width: '400px',    
     lazyLoad,
   }
 

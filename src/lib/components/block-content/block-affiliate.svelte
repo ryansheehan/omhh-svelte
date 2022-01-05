@@ -7,10 +7,14 @@
     data: AffiliateData;
   }
   export let portableText: BlockProps<AffiliateBlockProps>;
-  const {productUrl, name} = portableText.block.data;
+  
+  if (!portableText.block.data)
+    console.log(portableText);
+
+  const {productUrl, name} = portableText.block.data || {};
 </script>
 
-<a href={productUrl} target="_blank" rel="noopener">{name}<ExternalLinkIcon/></a>
+<a href={productUrl || '#'} target="_blank" rel="noopener">{name || 'NOT FOUND'}<ExternalLinkIcon/></a>
 
 <style lang="postcss">
   a, a:hover, a:visited, a:link {

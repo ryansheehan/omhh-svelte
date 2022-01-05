@@ -21,6 +21,9 @@
       case 'recipe':
         section = 'recipes';
         break;
+      case 'post':
+        section = 'blog';
+        break;
       default:
         console.warn(`internal link ${_type} not supported`);
         section = undefined;

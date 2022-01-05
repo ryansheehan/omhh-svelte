@@ -10,7 +10,6 @@
 <script lang="ts">
   import '@splidejs/splide/dist/css/splide.min.css';
   import {Splide, SplideSlide} from '@splidejs/svelte-splide';
-  import type { SvelteComponent } from 'svelte';
   import type { Options } from '@splidejs/splide';
 
   export const defaultOptions: Options = {

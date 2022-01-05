@@ -10,28 +10,29 @@
   function extractGramsAndProducts(ingredientGroups: IngredientGroup[]) {
     const ingredientGrams = new Map<string, number>();
     const ingredientProductMap = new Map<string, string>();
-    ingredientGroups.forEach(group => group.ingredients.forEach(ingredient => {
-      if(ingredient.food._type === 'food') {
-        const food = ingredient.food as FoodData;
-        const { amount, divisor, unit, modifier} = ingredient;
-        const grams = convertAmount({
-          amount: amount / divisor,
-          fromUnit: unit,
-          fromModifier: modifier,
-          toUnit: 'g',
-          portions: food.portions,
-        });
 
-        if (grams) {
-          ingredientGrams.set(ingredient._key, grams);
-        }
-        
-        // check to see if the food has an affiliate link
-        if (food.productSuggestion && food.productSuggestion.productUrl) {
-          ingredientProductMap.set(ingredient._key, food.productSuggestion.productUrl);
-        } 
+    ingredientGroups.forEach(group => group.ingredients.forEach(ingredient => {        
+      const food = ingredient.food as FoodData;
+      const { amount, divisor, unit, modifier} = ingredient;
+      const grams = convertAmount({
+        amount: amount / divisor,
+        fromUnit: unit,
+        fromModifier: modifier,
+        toUnit: 'g',
+        portions: food.portions,
+      });
+
+      if (grams) {
+        ingredientGrams.set(ingredient._key, grams);
       }
+              
+      // check to see if the food has an affiliate link
+      if (food.productSuggestion && food.productSuggestion.productUrl) {          
+        ingredientProductMap.set(ingredient._key, food.productSuggestion.productUrl);
+      } 
+      
     }));
+    
     return { ingredientGrams, ingredientProductMap };
   }
 
@@ -45,7 +46,7 @@
   {/if}
   <ul>
     {#each ingredients as {amount, divisor, displayName, displayModifier='', unit, food, _key} (_key)}
-      <li>{printFraction(amount * $scale.amount, divisor * $scale.divisor)} {unit} 
+      <li>[{_key}] {printFraction(amount * $scale.amount, divisor * $scale.divisor)} {unit} 
         {#if ingredientGrams.has(_key)}
         ({Math.round(ingredientGrams.get(_key) * $scale.amount / $scale.divisor)}g)
         {/if}

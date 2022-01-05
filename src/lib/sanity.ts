@@ -47,35 +47,41 @@ export async function getRecipeList(fetch: Fetch) {
   return recipes;
 }
 
-const richTextExpansion = `
-...,
+const richTextExpansion = `...,
 children[]{
   ...,
-  _type=='affiliateProductReference' => {
-    _key,
-    _ref,
-    _type,
-    _weak,
+  _type == 'affiliateProductReference' => {
     'data': *[_id == ^._ref][0]{
       name,
       imageUrl,
       productUrl,
-    }
-  }
+    }, 
+  },
 },
 markDefs[]{
   ...,
-  _type=='internalLink' => {
-    ...,
+  _type == 'internalLink' => {
     reference {
-      ...,
+      _type,
+      _ref,
+      _weak,
       'data': *[_id == ^._ref][0]{
         _type,
         'slug': slug.current,
-      }
-    }
-  }
-}
+      },
+    },
+  },
+},`;
+
+const foodExpansion = `_id,
+description,
+fdc_id,
+nutrients[]{amount,name,unit_name},
+portions,
+productSuggestion->{imageUrl,name,productUrl},
+notes[]{
+  ${richTextExpansion}
+},
 `;
 
 const richTextStepsExpansion = `
@@ -152,27 +158,31 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
     totalWeight, totalServings,
 
     ingredients[]{
-      ...,
-      food->{
+      _key,
+      _type,
+      _type == 'ingredientHeader' => { header, },
+      _type == 'ingredient' => {
         ...,
-        productSuggestion->{_id,name,productUrl},
-        ingredients [] {
-          ...,
-          food-> {
-            ...,
-            productSuggestion->{_id,name,productUrl},
-            notes[] {
-              ${richTextExpansion}
+        food->{
+          _type,
+          _type == 'food' => {
+            ${foodExpansion}
+          },
+          _type == 'recipe' => {
+            ingredients[]{
+              _key,
+              _type,
+              _type == 'ingredientHeader' => { header, },
+              _type == 'ingredient' => {
+                ...,
+                food->{
+                  ${foodExpansion}
+                },
+              },
             }
           },
-          notes[] {
-            ${richTextExpansion}
-          }         
-        }
+        },
       },
-      notes[] {
-        ${richTextExpansion}
-      }  
     },
 
     steps[]{
