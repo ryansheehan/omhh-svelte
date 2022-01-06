@@ -14,10 +14,7 @@
     autoplay: false,
     arrows: false,
     pagination: true,
-    heightRatio: 1.5,
-    perPage: undefined,
-    perMove: undefined,    
-    width: '400px',    
+    heightRatio: 1.5,    
     lazyLoad,
   }
 
