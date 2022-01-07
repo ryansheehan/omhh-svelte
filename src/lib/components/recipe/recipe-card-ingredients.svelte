@@ -6,37 +6,8 @@
   import { convertAmount } from '$lib/units';
 
   export let ingredientGroups: IngredientGroup[];
-
-  function extractGramsAndProducts(ingredientGroups: IngredientGroup[]) {
-    const ingredientGrams = new Map<string, number>();
-    const ingredientProductMap = new Map<string, string>();
-
-    ingredientGroups.forEach(group => group.ingredients.forEach(ingredient => {        
-      const food = ingredient.food as FoodData;
-      const { amount, divisor, unit, modifier} = ingredient;
-      const grams = convertAmount({
-        amount: amount / divisor,
-        fromUnit: unit,
-        fromModifier: modifier,
-        toUnit: 'g',
-        portions: food.portions,
-      });
-
-      if (grams) {
-        ingredientGrams.set(ingredient._key, grams);
-      }
-              
-      // check to see if the food has an affiliate link
-      if (food.productSuggestion && food.productSuggestion.productUrl) {          
-        ingredientProductMap.set(ingredient._key, food.productSuggestion.productUrl);
-      } 
-      
-    }));
-    
-    return { ingredientGrams, ingredientProductMap };
-  }
-
-  const {ingredientGrams, ingredientProductMap} = extractGramsAndProducts(ingredientGroups);
+  export let ingredientGrams: Map<string, number>;
+  export let ingredientProductMap: Map<string, string>;
 </script>
 
 <h4 class="header">Ingredients</h4>
@@ -46,7 +17,7 @@
   {/if}
   <ul>
     {#each ingredients as {amount, divisor, displayName, displayModifier='', unit, food, _key} (_key)}
-      <li>[{_key}] {printFraction(amount * $scale.amount, divisor * $scale.divisor)} {unit} 
+      <li>{printFraction(amount * $scale.amount, divisor * $scale.divisor)} {unit} 
         {#if ingredientGrams.has(_key)}
         ({Math.round(ingredientGrams.get(_key) * $scale.amount / $scale.divisor)}g)
         {/if}

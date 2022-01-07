@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type {RecipeData} from '$lib/sanity';
+  import type {IngredientGroup, RecipeData, FoodData ,BlockData, NutrientData} from '$lib/sanity';
+  import { convertAmount } from '$lib/units';
   import Image from '$lib/components/sanity-image.svelte';
   import RecipeCardHeader from '$lib/components/recipe/recipe-card-header.svelte';
   import RecipeCardIngredients from '$lib/components/recipe/recipe-card-ingredients.svelte';
@@ -10,6 +11,54 @@
   
   let scrollToTarget: HTMLElement;
   export const scrollTo = () => scrollToTarget?.scrollIntoView({behavior: 'smooth', block: 'start'});
+
+  function findCarbs(nutrients: NutrientData[]) {
+    for(let i = 0; i < nutrients.length; i++) {
+      if(nutrients[i].name === 'Carbohydrate, by difference') {
+        return nutrients[i].amount;
+      }
+    }    
+    return 0;
+  }
+
+  function extractGramsProductsNotes(ingredientGroups: IngredientGroup[]) {
+    const ingredientGrams = new Map<string, number>();
+    const ingredientProductMap = new Map<string, string>();
+    const noteMap = new Map<number, BlockData>();
+    let totalCarbs = 0;
+
+    ingredientGroups.forEach(group => group.ingredients.forEach(ingredient => {        
+      const food = ingredient.food as FoodData;
+      const {fdc_id, notes, nutrients} = food;
+      totalCarbs += findCarbs(nutrients);      
+      const { amount, divisor, unit, modifier} = ingredient;
+      const grams = convertAmount({
+        amount: amount / divisor,
+        fromUnit: unit,
+        fromModifier: modifier,
+        toUnit: 'g',
+        portions: food.portions,
+      });
+
+      if (grams) {
+        ingredientGrams.set(ingredient._key, grams);
+      }
+              
+      // check to see if the food has an affiliate link
+      if (food.productSuggestion && food.productSuggestion.productUrl) {          
+        ingredientProductMap.set(ingredient._key, food.productSuggestion.productUrl);
+      } 
+
+      if (notes && !noteMap.has(fdc_id)) {
+        noteMap.set(fdc_id, notes);
+      }      
+    }));
+
+    const foodNotes: {fdcid: number, blocks: BlockData}[] = [];
+    noteMap.forEach((blocks, fdcid) => foodNotes.push({fdcid, blocks}));
+
+    return { ingredientGrams, ingredientProductMap, foodNotes, totalCarbs };
+  }
 
   const {
     squareIGImage,
@@ -23,6 +72,8 @@
     ingredients,
     steps,
   } = recipe;
+
+  const {ingredientGrams, ingredientProductMap, foodNotes, totalCarbs} = extractGramsProductsNotes(ingredients);
 
   const headerProps = {
     title,
@@ -38,7 +89,8 @@
     servings: {
       total: totalServings,
       size: Math.floor(totalWeight / totalServings),
-    },    
+    },
+    totalCarbs,    
   }
 </script>
 
@@ -48,13 +100,13 @@
   </div>
   <RecipeCardHeader {...headerProps} />
   <div class="section">    
-    <RecipeCardIngredients ingredientGroups={ingredients} />
+    <RecipeCardIngredients ingredientGroups={ingredients} {ingredientGrams} {ingredientProductMap} />
   </div>
   <div class="section">
     <RecipeCardSteps stepGroups={steps} />
   </div>
   <div class="section">
-    <RecipeCardNotes ingredientGroups={ingredients} />
+    <RecipeCardNotes notes={foodNotes} />
   </div>
 </div>
 

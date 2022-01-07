@@ -1,4 +1,6 @@
 <script lang="ts">  
+  import T1Ribbon from '$lib/icons/t1-ribbon.svelte'
+  import Carbs from './carbs-display.svelte';
   import SelectScale from './recipe-scale-select.svelte';
   import {scale} from '$lib/store/recipe-scale';
 
@@ -15,7 +17,9 @@
   export let servings: {
     total: number;
     size: number;
-  }
+  };
+  export let totalCarbs: number;  
+  $: carbs = totalCarbs * $scale.amount / $scale.divisor;
 </script>
 
 <h3 class="title">{title}</h3>
@@ -24,6 +28,7 @@
   <div class="author-diet-wrapper">
     <span class="label">Author</span><span class="content">{author}<span class="publish-date">{publishDate}</span></span>
     <span class="label">Diet</span><span class="content tags">{dietaryTags.join(', ')}</span>  
+    <span class="label"><T1Ribbon width="0.8em"/>Carbs</span><span class="content"><Carbs {carbs}/></span>    
   </div>
   <div class="time-serving-wrapper">
     <div class="time-grid">

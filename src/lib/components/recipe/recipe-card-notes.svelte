@@ -1,25 +1,8 @@
 <script lang="ts">
-  import type {BlockData, IngredientGroup, FoodData} from '$lib/sanity';
+  import type {BlockData} from '$lib/sanity';
   import BlockContent from '$lib/components/block-content/block-content.svelte'
 
-  export let ingredientGroups: IngredientGroup[] = [];
-
-  function extractNotes(ingredientGroups: IngredientGroup[]) {
-    const noteMap = new Map<number, BlockData>();
-    ingredientGroups.forEach(group => group.ingredients.forEach(ingredient => {
-      if (ingredient.food._type === 'food') {
-        const {fdc_id, notes} = ingredient.food as FoodData;
-        if (notes && !noteMap.has(fdc_id)) {        
-          noteMap.set(fdc_id, notes);
-        }
-      }
-    }));
-    const notes: {fdcid: number, blocks: BlockData}[] = [];
-    noteMap.forEach((blocks, fdcid) => notes.push({fdcid, blocks}));
-    return notes;
-  }
-
-  const notes = extractNotes(ingredientGroups);
+  export let notes: {fdcid: number, blocks: BlockData}[] = [];
 </script>
 
 {#if notes.length > 0}
