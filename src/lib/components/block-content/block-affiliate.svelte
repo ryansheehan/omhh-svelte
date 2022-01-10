@@ -8,9 +8,6 @@
   }
   export let portableText: BlockProps<AffiliateBlockProps>;
   
-  if (!portableText.block.data)
-    console.log(portableText);
-
   const {productUrl, name} = portableText.block.data || {};
 </script>
 

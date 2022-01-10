@@ -86,6 +86,7 @@
     totalWeight, totalServings, yieldUnit,
     ingredients,
     steps,
+    foodScale,
   } = recipe;
 
   const {ingredientGrams, ingredientProductMap, foodNotes, totalCarbs, totalFiber, carbMap} = extractGramsProductsNotes(ingredients);
@@ -125,7 +126,7 @@
   </div>
   <HeartDivider />
   <div class="section">
-    <CarbsServed {totalWeight} {totalServings} fiber={totalFiber} carbs={totalCarbs} />
+    <CarbsServed {totalWeight} {totalServings} fiber={totalFiber} carbs={totalCarbs} {foodScale} />
   </div>
 </div>
 

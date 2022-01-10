@@ -47,7 +47,7 @@
     alsoLike,
     serveWith,   
     serveWithName, 
-    gallery,
+    gallery,    
   } = recipe;
 
   const images = [mainImage, secondaryImage, carbImage].filter(img => !!img);

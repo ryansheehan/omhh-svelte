@@ -202,6 +202,11 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
         }
       }
     },
+
+    'foodScale': {
+      'nutrition': *[_id=='19a2dabd-4db8-4b1e-bb2a-0d792159ad0e'][0]{ imageUrl, productUrl },
+      'postal': *[_id=='35407a6e-4ff0-4853-a795-8b3d44622ba8'][0]{ imageUrl, productUrl },
+    },
   }
   `;
 
@@ -213,6 +218,8 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
   
   const {ingredients=[], steps=[], alsoLike=[], serveWith=[], ...restRecipe} = json.result as RecipeDataInternal;
   
+  console.log(restRecipe.foodScale);
+
   const recipe: RecipeData = {    
     ingredients: reduceIngredients(ingredients || []),
     steps: reduceSteps(steps || []),    
@@ -254,6 +261,12 @@ interface RecipeDataInternal {
   serveWith: RecipeLinkCollection[];
   serveWithName: string;
   gallery: ImageData[];
+  foodScale: FoodScale;
+}
+
+export interface FoodScale {
+  nutrition: { imageUrl: string; productUrl: string };
+  postal: { imageUrl: string; productUrl: string };
 }
 
 export interface Contributor {

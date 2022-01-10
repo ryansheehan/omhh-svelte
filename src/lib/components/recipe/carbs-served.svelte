@@ -1,22 +1,28 @@
 <script lang="ts">
   import Button from '$lib/components/controls/button.svelte';
+  import T1Ribbon from '$lib/icons/t1-ribbon.svelte';
+  import type { FoodScale } from '$lib/sanity';
 
   export let totalServings: number;
   export let totalWeight: number;
   export let fiber: number;
   export let carbs: number;
+  export let foodScale: FoodScale;
+
+  function focusInput(evt) {    
+    evt.target.select();
+  }
 
   const servingWeight = Math.round(totalWeight / totalServings);
   const servingCarbs = Math.round(carbs / totalServings);
   const servingFiber = Math.round(fiber / totalServings);
   
-  let hidden = false;
+  let hidden = true;
 
   let cookwareMass = 0;
   let totalWeightWithCookware = 0;
   let amountServed = 0;
-  // $: carbsServed = Math.round(amountServed * carbs / totalWeight);
-  // $: fiberServed = Math.round(amountServed * fiber / totalWeight);
+  
   let carbsServed = 0;
   let fiberServed = 0;
   let foodWeight = 0;
@@ -38,7 +44,7 @@
 </script>
 
 <div class="button-wrapper">  
-  <Button on:click={() => hidden = !hidden}>{hidden ? 'Show Carb Calculator' : 'Hide Carb Calculator'}</Button>
+  <Button on:click={() => hidden = !hidden}><span style="margin-right:1ch"><T1Ribbon width="0.8em"/></span>{hidden ? 'Show Carb Calculator' : 'Hide Carb Calculator'}</Button>
 </div>
 
 <div class="carbs-served-wrapper" class:hidden>  
@@ -63,13 +69,13 @@
     <div class="tab-content calculated-table">
       {#if !ourKitchen}
       <label class="data-label" for="cookware-mass">Empty Dish (g)</label>
-      <span class="input-wrapper"><input type="number" id="cookware-mass" bind:value={cookwareMass} /></span>
+      <span class="input-wrapper"><input type="number" id="cookware-mass" bind:value={cookwareMass} on:focus={focusInput} /></span>
       <label class="data-label" for="total-weight">Food + Dish (g)</label>
-      <span class="input-wrapper"><input type="number" id="amount-served" bind:value={totalWeightWithCookware} /></span>
-      <span class="data-label">Net food weight</span><span class="data-value">{Math.round(foodWeight)}g</span>
+      <span class="input-wrapper"><input type="number" id="amount-served" bind:value={totalWeightWithCookware} on:focus={focusInput} /></span>
+      <span class="data-label">Net Food Weight</span><span class="data-value">{Math.round(foodWeight)}g</span>
       {/if}
       <label class="data-label" for="amount-served">Amount Served (g)</label>
-      <span class="input-wrapper"><input type="number" id="amount-served" bind:value={amountServed} /></span>
+      <span class="input-wrapper"><input type="number" id="amount-served" bind:value={amountServed} on:focus={focusInput} /></span>
       <span class="data-label">Carbohydrates served</span><span class="data-value">{carbsServed}g</span>
       <span class="data-label">Fiber served</span><span class="data-value">{fiberServed}g</span>
     </div>
@@ -80,9 +86,47 @@
     in ingredient brands, humidity, cooking time, heat levels, etc can affect the the final
     weight of the food, and its nutrient density.  
   </p>  
+
+  <div class="recommended-scales">
+    <h5>Recommended Scales</h5>
+    <div class="food-scale-container">
+      <figure class="scale-figure">
+        {@html foodScale.nutrition.imageUrl}
+        <figcaption>Nutrition Scale</figcaption>
+      </figure>
+      <figure class="scale-figure">
+        {@html foodScale.postal.imageUrl}
+        <figcaption>Heavy Weight Scale</figcaption>
+      </figure>
+    </div>
+  </div>
 </div>
 
 <style lang="postcss"> 
+
+  .scale-figure {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 8px;        
+    text-align: center;
+  }
+  .recommended-scales {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--half-element-spacing);
+    padding-top: var(--element-spacing);
+    background-color: var(--color-white);
+    padding-bottom: var(--half-element-spacing);
+  }
+
+  .food-scale-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 32px;    
+    padding: 0 16px;
+  }
+
   .kitchen-data-container {
     --remove-margin: calc(-1 * var(--recipe-card-padding));
     margin-left: var(--remove-margin);
@@ -142,10 +186,6 @@
     padding-bottom: var(--element-spacing);
   }
 
-  .hidden {
-    display: none !important;
-  }
-
   .disclaimer {
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xs);
@@ -169,6 +209,15 @@
     text-align: center;
     gap: var(--half-element-spacing);
     margin-bottom: var(--element-spacing);
+    /* max-height: 100vh;
+    transition: max-height 0.3s ease;
+    overflow: hidden; */
+
+    &.hidden {
+      max-height: 0;
+      margin-bottom: 0;
+      display: none;
+    }
   }
 
   .calculated-table {

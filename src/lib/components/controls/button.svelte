@@ -9,14 +9,17 @@
     flex: 1;  
     border: 1px solid var(--color-black);
     padding: 8px 16px;  
-    background-color: var(--color-primary-400);    
-    cursor: pointer;
+    background-color: var(--color-primary-400);        
     box-shadow: var(--shadow-elevation-low);
 
     &:disabled {
       border: none;
       background-color: var(--color-primary-300);
       cursor: auto;
+    }
+
+    @media (--tablet-and-larger) {
+      cursor: pointer;
     }
   }
 </style>
