@@ -10,12 +10,16 @@ export enum Scale {
   x3='3',
 }
 
-const half: ScaleFactor = {amount: 1, divisor: 2};
-const x1: ScaleFactor = {amount: 1, divisor: 1};
-const x2: ScaleFactor = {amount: 2, divisor: 1};
-const x3: ScaleFactor = {amount: 3, divisor: 1};
+export interface PrintableScaleFactor extends ScaleFactor {
+  toString: () => string;
+}
 
-export const scaleValues: Record<string, ScaleFactor> = {
+const half: PrintableScaleFactor = {amount: 1, divisor: 2, toString: () => Scale.half};
+const x1: PrintableScaleFactor = {amount: 1, divisor: 1, toString: () => Scale.x1};
+const x2: PrintableScaleFactor = {amount: 2, divisor: 1, toString: () => Scale.x2};
+const x3: PrintableScaleFactor = {amount: 3, divisor: 1, toString: () => Scale.x3};
+
+export const scaleValues: Record<string, PrintableScaleFactor> = {
   [Scale.half]: half,
   [Scale.x1]: x1,
   [Scale.x2]: x2,
@@ -23,7 +27,7 @@ export const scaleValues: Record<string, ScaleFactor> = {
 };
 
 export const createRecipeScale = () => {
-  const {subscribe, set} = writable<ScaleFactor>(x1);
+  const {subscribe, set} = writable<PrintableScaleFactor>(x1);
   return {
     subscribe,
     set: (scale: Scale) => {      

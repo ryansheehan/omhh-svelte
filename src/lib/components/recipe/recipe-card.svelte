@@ -70,7 +70,7 @@
     }));
 
     const foodNotes: {fdcid: number, blocks: BlockData}[] = [];
-    noteMap.forEach((blocks, fdcid) => foodNotes.push({fdcid, blocks}));
+    noteMap.forEach((blocks, fdcid) => foodNotes.push({fdcid, blocks}));    
 
     return { ingredientGrams, ingredientProductMap, foodNotes, totalCarbs, totalFiber, carbMap };
   }
@@ -89,7 +89,7 @@
     foodScale,
   } = recipe;
 
-  const {ingredientGrams, ingredientProductMap, foodNotes, totalCarbs, totalFiber, carbMap} = extractGramsProductsNotes(ingredients);
+  const {ingredientGrams, ingredientProductMap, foodNotes, totalCarbs, totalFiber, carbMap} = extractGramsProductsNotes(ingredients);  
 
   const headerProps = {
     title,

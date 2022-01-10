@@ -217,8 +217,6 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
   const json = await data.json();
   
   const {ingredients=[], steps=[], alsoLike=[], serveWith=[], ...restRecipe} = json.result as RecipeDataInternal;
-  
-  console.log(restRecipe.foodScale);
 
   const recipe: RecipeData = {    
     ingredients: reduceIngredients(ingredients || []),

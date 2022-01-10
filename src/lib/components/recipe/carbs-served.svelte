@@ -2,6 +2,7 @@
   import Button from '$lib/components/controls/button.svelte';
   import T1Ribbon from '$lib/icons/t1-ribbon.svelte';
   import type { FoodScale } from '$lib/sanity';
+  import { scale, Scale } from '$lib/store/recipe-scale';
 
   export let totalServings: number;
   export let totalWeight: number;
@@ -13,9 +14,14 @@
     evt.target.select();
   }
 
-  const servingWeight = Math.round(totalWeight / totalServings);
-  const servingCarbs = Math.round(carbs / totalServings);
-  const servingFiber = Math.round(fiber / totalServings);
+  let servingWeight: number;
+  let servingCarbs: number;
+  let servingFiber: number;
+  let scaledTotalWeight: number;
+  let scaledTotalServings: number;
+  let scaledFiber: number;
+  let scaledCarbs: number;
+  let scaleFraction: number;
   
   let hidden = true;
 
@@ -29,13 +35,30 @@
 
   let ourKitchen = true;
 
+  let scaleWord: string;
 
   $: {
+    switch($scale.toString()) {
+      case(Scale.half): scaleWord = 'half'; break;
+      case(Scale.x1): scaleWord = 'single'; break;
+      case(Scale.x2): scaleWord = 'double'; break;
+      case(Scale.x3): scaleWord = 'triple'; break;
+    }
+    scaleFraction = $scale.amount / $scale.divisor;
+    scaledTotalWeight = totalWeight * scaleFraction;
+    scaledTotalServings = totalServings * scaleFraction;
+    scaledFiber = fiber * scaleFraction;
+    scaledCarbs = carbs * scaleFraction;
+
+    servingCarbs = Math.round(scaledCarbs / scaledTotalServings);
+    servingFiber = Math.round(scaledFiber / scaledTotalServings);
+
     foodWeight = (totalWeightWithCookware || 0) - (cookwareMass || 0);
-    let tWeight = ourKitchen ? totalWeight : foodWeight;
+    let tWeight = ourKitchen ? scaledTotalWeight : foodWeight;
+    servingWeight = Math.round(tWeight / scaledTotalServings);
     if (tWeight > 0) {
-      carbsServed = Math.round(amountServed * carbs / tWeight);
-      fiberServed = Math.round(amountServed * fiber / tWeight);
+      carbsServed = Math.round(amountServed * scaledCarbs / tWeight);
+      fiberServed = Math.round(amountServed * scaledFiber / tWeight);
     } else {
       carbsServed = 0;
       fiberServed = 0;
@@ -48,14 +71,14 @@
 </div>
 
 <div class="carbs-served-wrapper" class:hidden>  
-  <div class="basic-nutrient-message">Each serving weighs about {servingWeight}g.*<br/></div>
+  <div>A <strong>{scaleWord}</strong> batch is <strong>{scaledTotalServings}</strong> servings.</div>  
   <div class="static-data">
     <span class="carb-title">Carbohydrates</span>    
     <span class="fiber-title">Fiber</span>
     <span class="data-label">Total</span>
-    <span class="data-value">{Math.round(carbs)}g</span>
+    <span class="data-value">{Math.round(scaledCarbs)}g</span>
     <span class="data-label">Total</span>
-    <span class="data-value">{Math.round(fiber)}g</span>
+    <span class="data-value">{Math.round(scaledFiber)}g</span>
     <span class="data-label">Per Serving</span>
     <span class="data-value">{servingCarbs}g</span>
     <span class="data-label">Per Serving</span>
@@ -71,13 +94,17 @@
       <label class="data-label" for="cookware-mass">Empty Dish (g)</label>
       <span class="input-wrapper"><input type="number" id="cookware-mass" bind:value={cookwareMass} on:focus={focusInput} /></span>
       <label class="data-label" for="total-weight">Food + Dish (g)</label>
-      <span class="input-wrapper"><input type="number" id="amount-served" bind:value={totalWeightWithCookware} on:focus={focusInput} /></span>
+      <span class="input-wrapper"><input type="number" id="total-weight" bind:value={totalWeightWithCookware} on:focus={focusInput} /></span>
       <span class="data-label">Net Food Weight</span><span class="data-value">{Math.round(foodWeight)}g</span>
       {/if}
+      <span class="data-label">Serving Weight</span>
+      <span class="data-value">{servingWeight}g</span>
       <label class="data-label" for="amount-served">Amount Served (g)</label>
       <span class="input-wrapper"><input type="number" id="amount-served" bind:value={amountServed} on:focus={focusInput} /></span>
-      <span class="data-label">Carbohydrates served</span><span class="data-value">{carbsServed}g</span>
-      <span class="data-label">Fiber served</span><span class="data-value">{fiberServed}g</span>
+      <span class="data-label">Carbohydrates served</span>
+      <span class="data-value">{carbsServed}g</span>
+      <span class="data-label">Fiber served</span>
+      <span class="data-value">{fiberServed}g</span>
     </div>
   </div>
 
@@ -138,8 +165,7 @@
   }
 
   .tab-content {
-    padding: var(--element-spacing) var(--recipe-card-padding);    
-    min-height: 242px;
+    padding: var(--element-spacing) var(--recipe-card-padding);        
   }
 
   .tab-container {
@@ -222,12 +248,12 @@
 
   .calculated-table {
     display: grid;
-    grid-template-columns: max-content auto;
+    grid-template-columns: max-content auto;    
     align-items: center;
     justify-content: center;
     row-gap: 4px;
     column-gap: 8px;
-    grid-auto-rows: min-content;
+    grid-auto-rows: 1fr;
 
     &>.data-value {
       text-align: right;
