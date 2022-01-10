@@ -33,8 +33,13 @@
     align-items: flex-end;
   }
 
+  label {
+    transition: 0.2s;
+  }
+
   label.selected {
     font-weight: bold;
     font-size: 1.2em;    
+    text-decoration: none;
   }
 </style>

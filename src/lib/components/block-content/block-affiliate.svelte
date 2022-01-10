@@ -19,7 +19,6 @@
 <style lang="postcss">
   a, a:hover, a:visited, a:link {
     text-decoration: none;
-    color: var(--color-black);
-    white-space: nowrap;
+    color: var(--color-black);    
   }
 </style>

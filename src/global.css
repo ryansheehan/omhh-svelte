@@ -224,4 +224,16 @@ h5 {
  transform: scale(1.2);
 }
 
-  
+input {
+  border: 1px solid var(--color-primary-400);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+input::placeholder {
+  color: var(--color-primary-800);
+}
+
+input:focus-visible {
+  outline: 2px solid var(--color-primary-600);
+} 

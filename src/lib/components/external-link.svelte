@@ -8,9 +8,8 @@
   
 <style lang="postcss">
   a, a:hover, a:visited, a:link {    
-    color: var(--color-primary-900);
+    color: var(--color-black);
     /* text-decoration: underline dotted; */
-    text-decoration: none;
-    white-space: nowrap;
+    text-decoration: none;    
   }
 </style>

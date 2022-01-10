@@ -6,41 +6,56 @@
   import RecipeCardIngredients from '$lib/components/recipe/recipe-card-ingredients.svelte';
   import RecipeCardSteps from '$lib/components/recipe/recipe-card-steps.svelte';
   import RecipeCardNotes from '$lib/components/recipe/recipe-card-notes.svelte';
+  import CarbsServed from '$lib/components/recipe/carbs-served.svelte'
+  import HeartDivider from '$lib/components/heart-divider.svelte';
 
   export let recipe: RecipeData;
   
   let scrollToTarget: HTMLElement;
   export const scrollTo = () => scrollToTarget?.scrollIntoView({behavior: 'smooth', block: 'start'});
 
-  function findCarbs(nutrients: NutrientData[]) {
+  function findNutrients(nutrients: NutrientData[], find: string[]) {
+    const totals = new Array(find.length).fill(0);
     for(let i = 0; i < nutrients.length; i++) {
-      if(nutrients[i].name === 'Carbohydrate, by difference') {
-        return nutrients[i].amount;
-      }
+      const foundIndex = find.indexOf(nutrients[i].name);
+      if (foundIndex > -1) {
+        totals[foundIndex] += nutrients[i].amount;      
+      }      
     }    
-    return 0;
+    return totals;
   }
 
   function extractGramsProductsNotes(ingredientGroups: IngredientGroup[]) {
     const ingredientGrams = new Map<string, number>();
     const ingredientProductMap = new Map<string, string>();
-    const noteMap = new Map<number, BlockData>();
+    const noteMap = new Map<number, BlockData>();  
+    const carbMap = new Map<string, number>();  
     let totalCarbs = 0;
+    let totalFiber = 0;
 
     ingredientGroups.forEach(group => group.ingredients.forEach(ingredient => {        
       const food = ingredient.food as FoodData;
       const {fdc_id, notes, nutrients} = food;
-      totalCarbs += findCarbs(nutrients);      
+      const [carbs, fiber] = findNutrients(nutrients, ['Carbohydrate, by difference', 'Fiber, total dietary']);
       const { amount, divisor, unit, modifier} = ingredient;
+      
       const grams = convertAmount({
         amount: amount / divisor,
         fromUnit: unit,
         fromModifier: modifier,
         toUnit: 'g',
         portions: food.portions,
-      });
+      });      
 
       if (grams) {
+        // nutrients are stored as per 100 grams
+        // so we must take the calculated grams and divide it by 100
+        const nutrientScalar = grams / 100;        
+        const scaledCarbs = carbs * nutrientScalar;
+        carbMap.set(ingredient._key, scaledCarbs);  
+
+        totalCarbs += nutrientScalar * carbs;
+        totalFiber += nutrientScalar * fiber;
         ingredientGrams.set(ingredient._key, grams);
       }
               
@@ -57,7 +72,7 @@
     const foodNotes: {fdcid: number, blocks: BlockData}[] = [];
     noteMap.forEach((blocks, fdcid) => foodNotes.push({fdcid, blocks}));
 
-    return { ingredientGrams, ingredientProductMap, foodNotes, totalCarbs };
+    return { ingredientGrams, ingredientProductMap, foodNotes, totalCarbs, totalFiber, carbMap };
   }
 
   const {
@@ -68,12 +83,12 @@
     publishedAt,
     tags,
     prepTime, cookTime, totalTime,
-    totalWeight, totalServings,
+    totalWeight, totalServings, yieldUnit,
     ingredients,
     steps,
   } = recipe;
 
-  const {ingredientGrams, ingredientProductMap, foodNotes, totalCarbs} = extractGramsProductsNotes(ingredients);
+  const {ingredientGrams, ingredientProductMap, foodNotes, totalCarbs, totalFiber, carbMap} = extractGramsProductsNotes(ingredients);
 
   const headerProps = {
     title,
@@ -89,8 +104,8 @@
     servings: {
       total: totalServings,
       size: Math.floor(totalWeight / totalServings),
-    },
-    totalCarbs,    
+      unit: yieldUnit,
+    }, 
   }
 </script>
 
@@ -100,13 +115,17 @@
   </div>
   <RecipeCardHeader {...headerProps} />
   <div class="section">    
-    <RecipeCardIngredients ingredientGroups={ingredients} {ingredientGrams} {ingredientProductMap} />
+    <RecipeCardIngredients {carbMap} ingredientGroups={ingredients} {ingredientGrams} {ingredientProductMap} />
   </div>
   <div class="section">
     <RecipeCardSteps stepGroups={steps} />
   </div>
   <div class="section">
     <RecipeCardNotes notes={foodNotes} />
+  </div>
+  <HeartDivider />
+  <div class="section">
+    <CarbsServed {totalWeight} {totalServings} fiber={totalFiber} carbs={totalCarbs} />
   </div>
 </div>
 
@@ -126,6 +145,7 @@
   .recipe-card-wrapper {
     --recipe-card-border: 1px solid var(--color-black);
     --recipe-card-image-size: 150px;
+    --recipe-card-padding: 8px;
 
     background-color: var(--color-primary-50);
     
@@ -136,7 +156,7 @@
 
     margin-top: calc(var(--recipe-card-image-size) * 0.5);
     border: var(--recipe-card-border);
-    padding: 0 8px;
+    padding: 0 var(--recipe-card-padding);
 
     font-size: var(--font-size-sm);
     line-height: var(--line-height-sm);

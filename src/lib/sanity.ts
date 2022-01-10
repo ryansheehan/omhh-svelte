@@ -155,7 +155,7 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
 
     prepTime, cookTime, totalTime,
 
-    totalWeight, totalServings,
+    totalWeight, totalServings, yieldUnit,
 
     ingredients[]{
       _key,
@@ -247,7 +247,8 @@ interface RecipeDataInternal {
   headerTags: string[];
   totalTime: number;
   totalWeight: number;
-  totalServings: number;  
+  totalServings: number; 
+  yieldUnit: string; 
   affiliateProducts: AffiliateData[];
   alsoLike: RecipeLinkCollection[];
   serveWith: RecipeLinkCollection[];

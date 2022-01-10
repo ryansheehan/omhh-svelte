@@ -3,11 +3,12 @@
   import { printFraction } from '$lib/fraction';
   import { scale } from '$lib/store/recipe-scale';
   import ExternalLink from '$lib/components/external-link.svelte';
-  import { convertAmount } from '$lib/units';
 
   export let ingredientGroups: IngredientGroup[];
   export let ingredientGrams: Map<string, number>;
   export let ingredientProductMap: Map<string, string>;
+  export let carbMap = new Map<string, number>();  
+  const showCarbMap = false;
 </script>
 
 <h4 class="header">Ingredients</h4>
@@ -20,6 +21,9 @@
       <li>{printFraction(amount * $scale.amount, divisor * $scale.divisor)} {unit} 
         {#if ingredientGrams.has(_key)}
         ({Math.round(ingredientGrams.get(_key) * $scale.amount / $scale.divisor)}g)
+        {/if}
+        {#if showCarbMap && carbMap.has(_key)}
+        [{Math.round((carbMap.get(_key) + Number.EPSILON) * 10) / 10}]
         {/if}
         <strong>
         {#if ingredientProductMap.has(_key)}
