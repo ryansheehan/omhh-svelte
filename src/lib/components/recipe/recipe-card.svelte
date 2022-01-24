@@ -33,10 +33,13 @@
     let totalCarbs = 0;
     let totalFiber = 0;
 
-    ingredientGroups.forEach(group => group.ingredients.forEach(ingredient => {        
+    ingredientGroups.forEach(group => group.ingredients.forEach(ingredient => {      
+      const {isGarnish, toTaste} = ingredient;  
       const food = ingredient.food as FoodData;
       const {fdc_id, notes, nutrients} = food;
-      const [carbs, fiber] = findNutrients(nutrients, ['Carbohydrate, by difference', 'Fiber, total dietary']);
+
+      // skip finding carbs and fiber for garnish or to-taste ingredients
+      const [carbs, fiber] =  isGarnish || toTaste ?  [0, 0] : findNutrients(nutrients, ['Carbohydrate, by difference', 'Fiber, total dietary']);
       const { amount, divisor, unit, modifier} = ingredient;
       
       const grams = convertAmount({

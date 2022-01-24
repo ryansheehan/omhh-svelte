@@ -23,7 +23,7 @@
 <div class="recipe-card-header">
   <div class="description">{description}</div>
   <div class="author-diet-wrapper">
-    <span class="label">Author</span><span class="content">{author}<span class="publish-date">{publishDate}</span></span>
+    <span class="label">Author</span><span class="content">{author}<time class="publish-date">{publishDate}</time></span>
     <span class="label">Diet</span><span class="content tags">{dietaryTags.join(', ')}</span>      
   </div>
   <div class="time-serving-wrapper">

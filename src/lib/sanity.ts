@@ -94,7 +94,17 @@ _type=='step' => {
 },
 `;
 
+const recipeReferenceExpansion = (tomorrow: string) => `
+'recipes': *[_type=='recipe' && defined(publishedAt) && dateTime(publishedAt) < dateTime('${tomorrow}')  && ^._ref in tags[]._ref && $slug != slug.current]{
+  'slug': slug.current,
+  'image': mainImage,
+  'name': name,
+},`;
+
 export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
+  const todayDate = new Date();
+  const tomorrow = (new Date(`${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate() + 1}`)).toISOString();
+
   const rawQuery = `
   *[_type=='recipe' && slug.current==$slug][0]{
     _type,
@@ -128,19 +138,11 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
     affiliateProducts[]->{_id,imageUrl,name,productUrl},
 
     'alsoLike': alsoLikeTags[]{
-      'recipes': *[_type=='recipe' && ^._ref in tags[]._ref && $slug != slug.current]{
-        'slug': slug.current,
-        'image': mainImage,
-        'name': name,
-      }
+      ${recipeReferenceExpansion(tomorrow)}
     },
 
     'serveWith': serveWithTags[]{
-      'recipes': *[_type=='recipe' && ^._ref in tags[]._ref && $slug != slug.current]{
-        'slug': slug.current,
-        'image': mainImage,
-        'name': name,
-      }
+      ${recipeReferenceExpansion(tomorrow)}
     },
 
     serveWithName,
@@ -348,9 +350,11 @@ export interface IngredientData {
   amount: number;
   displayName: string;
   displayModifier: string;  
+  hideDisplayUnit: boolean;
   divisor: number;
   modifier: string;
-  optional: boolean;  
+  isGarnish: boolean;  
+  toTaste: boolean;
   unit: string;
   food: FoodData | RecipeData;
 }
@@ -448,8 +452,8 @@ function reduceIngredients(
         // this means that we need to process the ingredients of the internal representation
         const food = (item.food as unknown) as RecipeDataInternal; 
         
-        // sub-recipes do not need optional ingredients
-        const foodIngredients = food.ingredients.filter(f => f._type === 'ingredient' && !f.optional);     
+        // sub-recipes do not need garnish ingredients
+        const foodIngredients = food.ingredients.filter(f => f._type === 'ingredient' && !f.isGarnish);     
         reduceIngredients(foodIngredients, item.amount, item.divisor, groups, currentGroup);
       } else {
         item.amount *= scaleNumerator;

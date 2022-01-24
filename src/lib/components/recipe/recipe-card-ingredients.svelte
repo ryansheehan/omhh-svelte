@@ -8,7 +8,7 @@
   export let ingredientGrams: Map<string, number>;
   export let ingredientProductMap: Map<string, string>;
   export let carbMap = new Map<string, number>();  
-  const showCarbMap = false;
+  const showCarbMap = true;
 </script>
 
 <h4 class="header">Ingredients</h4>
@@ -17,8 +17,8 @@
     <h5 class="sub-header">{header}</h5>
   {/if}
   <ul>
-    {#each ingredients as {amount, divisor, displayName, displayModifier='', unit, food, _key} (_key)}
-      <li>{printFraction(amount * $scale.amount, divisor * $scale.divisor)} {unit} 
+    {#each ingredients as {amount, divisor, displayName, hideDisplayUnit, displayModifier='', unit, food, _key} (_key)}
+      <li>{printFraction(amount * $scale.amount, divisor * $scale.divisor)}{hideDisplayUnit ? '' : ` ${unit}`} 
         {#if ingredientGrams.has(_key)}
         ({Math.round(ingredientGrams.get(_key) * $scale.amount / $scale.divisor)}g)
         {/if}

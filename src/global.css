@@ -2,6 +2,8 @@
   variables
 */
 :root {
+  /* https://grayscale.design/app */
+  /* https://paletton.com */
   --element-spacing: 1.5rem;
   --half-element-spacing: calc(var(--element-spacing) / 2);
   --page-padding: 16px;
