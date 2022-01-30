@@ -11,8 +11,7 @@
     display: block;
     height: 56px;
     color: var(--color-black);
-    margin-left: auto;
-    margin-right: auto;
+    
   }
 
   a:hover, a:visited, a:active {

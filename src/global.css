@@ -7,6 +7,7 @@
   --element-spacing: 1.5rem;
   --half-element-spacing: calc(var(--element-spacing) / 2);
   --page-padding: 16px;
+  --page-width: 1100px;
 
   --font-family-header: 'Gentium Basic', serif;
   --font-family-content: 'Montserrat', sans-serif;

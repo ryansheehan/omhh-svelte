@@ -18,7 +18,7 @@
       cursor: auto;
     }
 
-    @media (--tablet-and-larger) {
+    @media screen and (--tablet-and-larger) {
       cursor: pointer;
     }
   }

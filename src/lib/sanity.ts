@@ -103,8 +103,10 @@ const recipeReferenceExpansion = (tomorrow: string) => `
 
 export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
   const todayDate = new Date();
-  const tomorrow = (new Date(`${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate() + 1}`)).toISOString();
-
+  todayDate.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(todayDate);
+  tomorrow.setDate(tomorrow.getDate() + 1);  
+  const tomorrowIso = tomorrow.toISOString();
   const rawQuery = `
   *[_type=='recipe' && slug.current==$slug][0]{
     _type,
@@ -138,11 +140,11 @@ export async function getRecipeDataBySlug(slug: string, fetch: Fetch) {
     affiliateProducts[]->{_id,imageUrl,name,productUrl},
 
     'alsoLike': alsoLikeTags[]{
-      ${recipeReferenceExpansion(tomorrow)}
+      ${recipeReferenceExpansion(tomorrowIso)}
     },
 
     'serveWith': serveWithTags[]{
-      ${recipeReferenceExpansion(tomorrow)}
+      ${recipeReferenceExpansion(tomorrowIso)}
     },
 
     serveWithName,

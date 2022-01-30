@@ -18,7 +18,9 @@ const config = {
             'custom-properties': true,
             'gap-properties': true,
             'not-pseudo-class': true,
-            'custom-media-queries': true,
+            'custom-media-queries': {
+              importFrom: 'src/queries.pcss',
+            },
           },
         }),
       ]

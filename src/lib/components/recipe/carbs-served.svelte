@@ -187,7 +187,7 @@
       border-right: none;
     }
 
-    @media (--laptop-and-larger) {
+    @media screen and (--laptop-and-larger) {
       cursor: pointer;
     }
 
@@ -219,7 +219,7 @@
   }
 
   label {
-    @media (--laptop-and-larger) {
+    @media screen and (--laptop-and-larger) {
       cursor: pointer;
     }
   }

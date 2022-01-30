@@ -31,7 +31,7 @@
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xs);
   }
-  @media (--tablet-and-larger) {
+  @media screen and (--tablet-and-larger) {
     br {
       display: none;
     }
