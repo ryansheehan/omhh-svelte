@@ -489,7 +489,7 @@ function reduceSteps(
       groups.push(currentGroup);
     } else if(item._type === 'reference') {
       const ref = item.data;
-      if (ref._type === 'recipe') {
+      if (ref._type === 'recipe' && ref.steps.length > 0) {
         reduceSteps(ref.steps.slice(0, -1), groups, currentGroup);
       }
     } else {

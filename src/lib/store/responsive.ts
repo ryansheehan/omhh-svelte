@@ -3,13 +3,14 @@ import { browser } from '$app/env';
 
 export enum MediaSize {
   none = 0x00,
-  mobile = 0x01,
-  tablet = 0x02,
-  laptop = 0x04,
-  all = 0x0f,
-  tabletAndLarger = 0x0e,
-  laptopAndLarger = 0x0c,
-  desktopAndLarger = 0x08,
+  mobile = 0x08,
+  tablet = 0x04,
+  laptop = 0x02,
+  desktop = 0x01,  
+  mobileAndLarger = 0x08,
+  tabletAndLarger = 0x0c,
+  laptopAndLarger = 0x0e,
+  desktopAndLarger = 0x0f,
 }
 
 export function printMediaSize(mediaSize: number) {
@@ -25,15 +26,15 @@ export function printMediaSize(mediaSize: number) {
 }
 
 export function isTabletAndLarger(mediaQuerySize: number) {
-  return Boolean(mediaQuerySize & MediaSize.tabletAndLarger);
+  return Boolean(mediaQuerySize >= MediaSize.tabletAndLarger);
 }
 
 export function isLaptopAndLarger(mediaQuerySize: number) {
-  return Boolean(mediaQuerySize & MediaSize.laptopAndLarger);
+  return Boolean(mediaQuerySize >= MediaSize.laptopAndLarger);
 }
 
 export function isDesktopAndLarger(mediaQuerySize: number) {
-  return Boolean(mediaQuerySize & MediaSize.desktopAndLarger);
+  return Boolean(mediaQuerySize >= MediaSize.desktopAndLarger);
 }
 
 export const mediaSize = readable<MediaSize>(MediaSize.mobile, set => {
@@ -53,7 +54,7 @@ export const mediaSize = readable<MediaSize>(MediaSize.mobile, set => {
       } else if (mql_tabletAndLarger.matches) {        
         mediaQuerySize = MediaSize.tabletAndLarger;
       } else {
-        mediaQuerySize = MediaSize.mobile;
+        mediaQuerySize = MediaSize.mobileAndLarger;
       }     
 
       set(mediaQuerySize);      

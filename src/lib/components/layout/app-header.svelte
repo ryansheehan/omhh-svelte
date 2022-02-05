@@ -7,8 +7,6 @@
   import { mediaSize, isTabletAndLarger } from '$lib/store/responsive';
 
   let y;  
-
-  $: console.log(`mediaSize: ${$mediaSize.toString(2)}`);
 </script>
 
 <svelte:window bind:scrollY={y}/>

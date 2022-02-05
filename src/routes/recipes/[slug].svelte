@@ -65,7 +65,9 @@
   <BlockContent blocks={post} />
   <HeartDivider />
   <BlockContent blocks={postClosing} />
+  {#if products}
   <RecommendedProducts {products} />
+  {/if}
   <RecipeCard recipe={recipe} bind:this={recipeCard} />
   <ShareMessage />
   {#if serveWith?.length > 0}

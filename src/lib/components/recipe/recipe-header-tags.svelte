@@ -10,6 +10,9 @@
 
 <style lang="postcss">
    .tags-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;  
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xs);
     text-align: center;
