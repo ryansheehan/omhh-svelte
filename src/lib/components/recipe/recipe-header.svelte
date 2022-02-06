@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import type {ImageData} from '$lib/sanity';
-  import { mediaSize, isLaptopAndLarger, printMediaSize } from '$lib/store/responsive';
+  import { mediaSize, isLaptopAndLarger } from '$lib/store/responsive';
   import MobileRecipeHeader from './recipe-header-mobile.svelte';
   import LargeRecipeHeader from './recipe-header-large.svelte';
 

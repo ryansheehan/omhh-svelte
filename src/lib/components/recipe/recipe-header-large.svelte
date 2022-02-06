@@ -30,11 +30,12 @@
 <style lang="postcss">
   .recipe-card-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;    
+    grid-template-columns: 1fr 1fr 1fr; 
+    column-gap: calc(var(--element-spacing) * 2 / 3);   
   }
 
   .recipeInfo {    
-    padding: 0 16px;
+    /* padding: 0 16px; */
     padding-top: 16px;
     display: grid;
     grid-template-rows: auto auto auto auto;

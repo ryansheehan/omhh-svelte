@@ -11,4 +11,25 @@
   const source = portableText.block;
 </script>
 
-<Image {source} {widths} {sizes} showCaption={false}/>
+<div class="image-wrapper">
+  <div>
+    <Image {source} {widths} {sizes} showCaption={false}/>
+  </div>
+</div>
+
+<style lang="postcss">
+  .image-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-white);
+    
+    & div {      
+      max-width: 600px;
+
+      @media screen and (--laptop-and-larger) {
+        max-width: 700px;
+      }
+    }
+  }
+</style>

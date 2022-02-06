@@ -12,7 +12,7 @@
   }
 </script>
 
-<script lang="ts">
+<script lang="ts">  
   import {imageConfig} from '$lib/responsive';
   import RecipeHeader from '$lib/components/recipe/recipe-header.svelte';
   import Image from '$lib/components/sanity-image.svelte';  
@@ -28,6 +28,7 @@
   import EmailSignup from '$lib/components/forms/email-signup.svelte';
 
   const {widths, sizes} = imageConfig.full;
+
 
 
   export let recipe: RecipeData;  
@@ -58,40 +59,99 @@
 </script>
 
 <div class="recipe-page-wrapper">
-  <RecipeHeader {title} {images} {tags} caption={description} on:scrollToRecipe={scrollToRecipe} />
-  {#if pinterestImage}
-  <Image source={pinterestImage} widths={widths} sizes={sizes} showCaption={false} />
-  {/if}
-  <BlockContent blocks={post} />
-  <HeartDivider />
-  <BlockContent blocks={postClosing} />
-  {#if products}
-  <RecommendedProducts {products} />
-  {/if}
-  <RecipeCard recipe={recipe} bind:this={recipeCard} />
-  <ShareMessage />
-  {#if serveWith?.length > 0}
-  <RelatedLinks title="What to serve with {serveWithName || 'this recipe'}" links={serveWith} />
-  {/if}
-  {#if alsoLike?.length > 0}
-  <RelatedLinks title="You may also like" links={alsoLike} />
-  {/if}
-  {#if gallery?.length > 0}
-  <RecipeGallery images={gallery}/>
-  {/if}
-  <HeartDivider />
-  <ContributorBio {author}/>
-  <HeartDivider />
-  <SupportedOrganizations />
-  <HeartDivider />
-  <EmailSignup from="recipe" />
+  <div class="recipe-page-header">
+    <RecipeHeader {title} {images} {tags} caption={description} on:scrollToRecipe={scrollToRecipe} />
+  </div>
+  <div class="main-column">
+    {#if pinterestImage}
+    <div class="pinterest-image">
+      <div>
+        <Image source={pinterestImage} widths={widths} sizes={sizes} showCaption={false} />
+      </div>
+    </div>
+    {/if}
+    <BlockContent blocks={post} />
+    <HeartDivider />
+    <BlockContent blocks={postClosing} />
+    {#if products}
+    <RecommendedProducts {products} />
+    {/if}
+    <RecipeCard recipe={recipe} bind:this={recipeCard} />
+    <ShareMessage />
+    {#if serveWith?.length > 0}
+    <RelatedLinks title="What to serve with {serveWithName || 'this recipe'}" links={serveWith} />
+    {/if}
+    {#if alsoLike?.length > 0}
+    <RelatedLinks title="You may also like" links={alsoLike} />
+    {/if}
+    {#if gallery?.length > 0}
+    <RecipeGallery images={gallery}/>
+    {/if}
+    <div class="hide-when-large">
+      <HeartDivider />      
+    </div>
+  </div>
+  <aside class="aside-column">
+    <ContributorBio {author}/>    
+    <Image source={carbImage} widths={imageConfig.aside.widths} sizes={imageConfig.aside.sizes} showCaption={false} />    
+    <HeartDivider />
+    <SupportedOrganizations />
+    <HeartDivider />
+    <EmailSignup from="recipe" />
+  </aside>
 </div>
 
 <style lang="postcss">
-  .recipe-page-wrapper {
+
+  .main-column, .aside-column {
     display: flex;
     flex-flow: column nowrap;
     gap: var(--element-spacing);
-    align-items: center;    
+    align-items: center;        
+  }
+  .recipe-page-wrapper {
+    --aside-border-width: 2px;
+    --aside-half-margin: calc(var(--half-element-spacing) - (var(--aside-border-width) / 2));
+
+    display: grid;    
+    grid-template-columns: 2fr 1fr;  
+    grid-template-rows: auto 1fr;  
+    row-gap: var(--element-spacing);
+    align-items: flex-start;
+
+    max-width: calc(var(--page-width) * 2 / 3);
+    @media screen and (--laptop-and-larger) {
+      max-width: initial;
+    }
+  }
+  .recipe-page-header, .main-column, .aside-column {
+    grid-column: 1 / 3;
+  } 
+
+  .pinterest-image {  
+    width: 100%;      
+    background-color: var(--color-primary-100);
+    display: flex;
+    justify-content: center;
+
+    & div {
+      max-width: 500px;
+    }
+  }
+
+  @media screen and (--laptop-and-larger) {    
+    .main-column {
+      grid-column: 1 / 2;
+      padding-right: var(--aside-half-margin);
+      border-right: var(--aside-border-width) solid var(--color-primary-400);
+    }
+
+    .aside-column {
+      grid-column: 2 / 3;
+      padding-left: var(--aside-half-margin);
+    }
+    .hide-when-large {      
+      display: none;
+    }
   }
 </style>

@@ -1,5 +1,6 @@
 import {readable} from 'svelte/store';
 import { browser } from '$app/env';
+import { query } from '../responsive';
 
 export enum MediaSize {
   none = 0x00,
@@ -38,11 +39,10 @@ export function isDesktopAndLarger(mediaQuerySize: number) {
 }
 
 export const mediaSize = readable<MediaSize>(MediaSize.mobile, set => {
-  if (browser) {
-    // values need to match what is set in the __layout.svelte custom media queries
-    const mql_tabletAndLarger = window.matchMedia('(min-width: 34.375rem)');
-    const mql_laptopAndLarger = window.matchMedia('(min-width: 68.75rem)');
-    const mql_desktopAndLarger = window.matchMedia('(min-width: 93.75rem)'); 
+  if (browser) {    
+    const mql_tabletAndLarger = window.matchMedia(query.tabletAndLarger);
+    const mql_laptopAndLarger = window.matchMedia(query.laptopAndLarger);
+    const mql_desktopAndLarger = window.matchMedia(query.desktopAndLarger);
     
     const update = () => {       
       let mediaQuerySize = MediaSize.none;

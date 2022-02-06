@@ -32,8 +32,7 @@
     width: 100%;
   }
 
-  .recipe-header-wrapper {
-    max-width: 600px;
+  .recipe-header-wrapper {    
     margin: 0 calc(-1 * var(--page-padding));
     padding: var(--page-padding);
     display: flex;
