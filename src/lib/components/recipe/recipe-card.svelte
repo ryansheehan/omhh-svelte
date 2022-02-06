@@ -8,6 +8,7 @@
   import RecipeCardNotes from '$lib/components/recipe/recipe-card-notes.svelte';
   import CarbsServed from '$lib/components/recipe/carbs-served.svelte'
   import HeartDivider from '$lib/components/heart-divider.svelte';
+  import { query } from '$lib/responsive';
 
   export let recipe: RecipeData;
   
@@ -115,7 +116,7 @@
 
 <div class="recipe-card-wrapper">
   <div class="recipe-card-image" bind:this={scrollToTarget}>
-    <Image source={squareIGImage} widths={[150]} sizes={['150px']} showCaption={false} />  
+    <Image source={squareIGImage} widths={[176, 150]} sizes={[`${query.tabletAndLarger} 200px`, '150px']} showCaption={false} />  
   </div>
   <RecipeCardHeader {...headerProps} />
   <div class="section">    
@@ -151,6 +152,10 @@
     --recipe-card-image-size: 150px;
     --recipe-card-padding: 8px;
 
+    @media screen and (--tablet-and-larger) {
+      --recipe-card-image-size: 200px;
+    }
+
     background-color: var(--color-primary-50);
     
     display: flex;
@@ -164,5 +169,10 @@
 
     font-size: var(--font-size-sm);
     line-height: var(--line-height-sm);
+
+    @media screen and (--tablet-and-larger) {
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-md);
+    }
   }
 </style>

@@ -31,10 +31,15 @@
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-end;
+    flex: 1 1 9ch;
+    max-width: 14ch;
+    margin-left: auto;
   }
 
-  label {
-    transition: 0.2s;
+  label {    
+    @media screen and (--laptop-and-larger) {      
+      cursor: pointer;
+    }
   }
 
   label.selected {

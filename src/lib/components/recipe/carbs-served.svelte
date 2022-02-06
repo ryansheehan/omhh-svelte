@@ -210,6 +210,9 @@
     display: flex;
     justify-content: center;
     padding-bottom: var(--element-spacing);
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .disclaimer {

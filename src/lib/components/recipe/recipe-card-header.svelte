@@ -50,7 +50,9 @@
   }
 
   .scale-select {
-    margin-left: -0ch;
+    display: flex;
+    align-items: flex-start; 
+    justify-content: flex-end;   
     color: var(--color-primary-900);
     width: 100%;
   }
@@ -114,6 +116,11 @@
     line-height: var(--line-height-xs);
     padding-left: 24px;
     padding-right: 24px;
+
+    @media screen and (--tablet-and-larger) {
+      font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+    }
   }
 
   .title {
