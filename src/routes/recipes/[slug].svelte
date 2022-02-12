@@ -92,8 +92,10 @@
     </div>
   </div>
   <aside class="aside-column">
-    <ContributorBio {author}/>    
+    <ContributorBio {author}/> 
+    {#if carbImage}   
     <Image source={carbImage} widths={imageConfig.aside.widths} sizes={imageConfig.aside.sizes} showCaption={false} />    
+    {/if}
     <HeartDivider />
     <SupportedOrganizations />
     <HeartDivider />
